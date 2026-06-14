@@ -46,3 +46,12 @@
 .esr-seo-check.esr-seo-bad  .esr-seo-dot { background: #dc3545; }
 
 .esr-seo-live { font-size: .8rem; color: #6c757d; margin-left: .25rem; }
+
+.esr-seo-section {
+    margin: 0 0 .5rem;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: #6c757d;
+}

@@ -33,7 +33,10 @@ class SeoAnalysisField extends FormField
     {
         Factory::getApplication()->getLanguage()->load('com_esquemarico', JPATH_ADMINISTRATOR);
 
-        $result = (new SeoAnalyzer())->analyze($this->coletarDados());
+        $analyzer = new SeoAnalyzer();
+        $dados    = $this->coletarDados();
+        $result   = $analyzer->analyze($dados);
+        $leg      = $analyzer->readability($dados);
 
         HTMLHelper::_('stylesheet', 'com_esquemarico/seo.css', ['relative' => true]);
         HTMLHelper::_('script', 'com_esquemarico/seo.js', ['relative' => true]);
@@ -43,6 +46,8 @@ class SeoAnalysisField extends FormField
 
         $html   = [];
         $html[] = '<div class="esr-seo" data-esr-seo>';
+
+        $html[] = '<h4 class="esr-seo-section">' . Text::_('ESR_SEO_SECTION_SEO') . '</h4>';
 
         // Medidor de pontuação.
         $html[] = '<div class="esr-seo-gauge esr-seo-' . $rating . '">';
@@ -58,6 +63,24 @@ class SeoAnalysisField extends FormField
         $html[] = '<ul class="esr-seo-checks list-unstyled">';
         foreach ($checks as $c) {
             $msg = Text::sprintf($c['key'], ...array_values($c['params']));
+            $html[] = '<li class="esr-seo-check esr-seo-' . $c['status'] . '">'
+                . '<span class="esr-seo-dot" aria-hidden="true"></span> ' . htmlspecialchars($msg, ENT_QUOTES, 'UTF-8') . '</li>';
+        }
+        $html[] = '</ul>';
+
+        // Legibilidade (pontuação independente, estilo Yoast).
+        $legChecks = $leg['checks'];
+        usort($legChecks, static fn ($a, $b) => ($ordem[$a['status']] ?? 9) <=> ($ordem[$b['status']] ?? 9));
+
+        $html[] = '<h4 class="esr-seo-section mt-4">' . Text::_('ESR_SEO_SECTION_READABILITY') . '</h4>';
+        $html[] = '<div class="esr-seo-gauge esr-seo-' . (string) $leg['rating'] . '">';
+        $html[] = '<span class="esr-seo-score">' . (int) $leg['score'] . '</span><span class="esr-seo-max">/100</span>';
+        $html[] = '<div class="esr-seo-rating">' . Text::_('ESR_SEO_RATING_' . strtoupper((string) $leg['rating'])) . '</div>';
+        $html[] = '</div>';
+
+        $html[] = '<ul class="esr-seo-checks list-unstyled">';
+        foreach ($legChecks as $c) {
+            $msg    = Text::sprintf($c['key'], ...array_values($c['params']));
             $html[] = '<li class="esr-seo-check esr-seo-' . $c['status'] . '">'
                 . '<span class="esr-seo-dot" aria-hidden="true"></span> ' . htmlspecialchars($msg, ENT_QUOTES, 'UTF-8') . '</li>';
         }

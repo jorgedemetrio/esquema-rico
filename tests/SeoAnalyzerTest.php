@@ -162,4 +162,30 @@ final class SeoAnalyzerTest extends TestCase
         $this->assertGreaterThanOrEqual(70, $r['score']);
         $this->assertSame('good', $r['rating']);
     }
+
+    public function testLegibilidadeTemQuatroChecksEScore(): void
+    {
+        $r = $this->a->readability(['text' => '<p>O gato dorme. A casa e azul. Tudo bem aqui.</p>']);
+
+        $this->assertSame(
+            ['flesch', 'sentence_length', 'paragraph_length', 'subheading_distribution'],
+            array_column($r['checks'], 'id')
+        );
+        $this->assertIsInt($r['score']);
+        $this->assertContains($r['rating'], ['good', 'ok', 'bad']);
+    }
+
+    public function testLegibilidadeFraseMuitoLongaPontuaMal(): void
+    {
+        $r = $this->a->readability(['text' => '<p>' . str_repeat('palavra ', 60) . '</p>']);
+        $this->assertSame('bad', $this->statusDe($r, 'sentence_length'));
+    }
+
+    public function testLegibilidadeNaoAfetaScoreDeSeo(): void
+    {
+        // O score de SEO (analyze) não inclui as verificações de legibilidade.
+        $ids = array_column($this->a->analyze(['text' => 'texto qualquer'])['checks'], 'id');
+        $this->assertNotContains('flesch', $ids);
+        $this->assertNotContains('sentence_length', $ids);
+    }
 }
