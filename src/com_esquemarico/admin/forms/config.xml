@@ -3,7 +3,7 @@
     Configurações globais (esquemas globais). Persistidas na linha "config" de
     #__esquemarico_config e lidas pelo plugin de sistema na renderização.
 -->
-<form>
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
     <fieldset name="sitename" label="ESR_CFG_SITENAME">
         <field name="sitename_enabled" type="radio" layout="joomla.form.field.radio.switcher"
             label="JENABLED" default="1">
@@ -66,6 +66,73 @@
             label="ESR_CFG_SOCIAL_OTHER" description="ESR_CFG_SOCIAL_OTHER_DESC" />
     </fieldset>
 
+    <fieldset name="jsonld" label="ESR_CFG_JSONLD">
+        <field name="combine_graph" type="radio" layout="joomla.form.field.radio.switcher"
+            label="ESR_CFG_JSONLD_GRAPH" description="ESR_CFG_JSONLD_GRAPH_DESC" default="0">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="titles" label="ESR_CFG_TITLES">
+        <field name="titles_note" type="note"
+            label="ESR_CFG_TITLES" description="ESR_CFG_TITLES_DESC" />
+        <field name="title_template_enabled" type="radio" layout="joomla.form.field.radio.switcher"
+            label="JENABLED" description="ESR_CFG_TITLES_ENABLED_DESC" default="0">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="title_template" type="text" class="input-xxlarge"
+            label="ESR_CFG_TITLES_TEMPLATE" description="ESR_CFG_TITLES_TEMPLATE_DESC"
+            default="%title% %sep% %sitename%" showon="title_template_enabled:1" />
+        <field name="title_separator" type="text"
+            label="ESR_CFG_TITLES_SEPARATOR" default="-" showon="title_template_enabled:1" />
+        <field name="title_home" type="text" class="input-xxlarge"
+            label="ESR_CFG_TITLES_HOME" description="ESR_CFG_TITLES_HOME_DESC"
+            showon="title_template_enabled:1" />
+    </fieldset>
+
+    <fieldset name="opengraph" label="ESR_CFG_OPENGRAPH">
+        <field name="og_note" type="note"
+            label="ESR_CFG_OPENGRAPH" description="ESR_CFG_OPENGRAPH_DESC" />
+        <field name="og_enabled" type="radio" layout="joomla.form.field.radio.switcher"
+            label="JENABLED" description="ESR_CFG_OPENGRAPH_ENABLED_DESC" default="1">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="og_default_image" type="media"
+            label="ESR_CFG_OPENGRAPH_IMAGE" description="ESR_CFG_OPENGRAPH_IMAGE_DESC"
+            showon="og_enabled:1" />
+        <field name="og_twitter_card" type="list"
+            label="ESR_CFG_OPENGRAPH_TWITTER_CARD" default="summary_large_image" showon="og_enabled:1">
+            <option value="summary_large_image">ESR_CFG_OPENGRAPH_CARD_LARGE</option>
+            <option value="summary">ESR_CFG_OPENGRAPH_CARD_SUMMARY</option>
+        </field>
+        <field name="og_twitter_site" type="text" class="input-xxlarge"
+            label="ESR_CFG_OPENGRAPH_TWITTER_SITE" description="ESR_CFG_OPENGRAPH_TWITTER_SITE_DESC"
+            hint="@seuperfil" showon="og_enabled:1" />
+    </fieldset>
+
+    <fieldset name="indexing" label="ESR_CFG_INDEXING">
+        <field name="indexing_note" type="note"
+            label="ESR_CFG_INDEXING" description="ESR_CFG_INDEXING_DESC" />
+        <field name="canonical_enabled" type="radio" layout="joomla.form.field.radio.switcher"
+            label="ESR_CFG_INDEXING_CANONICAL" description="ESR_CFG_INDEXING_CANONICAL_DESC" default="0">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="noindex_search" type="radio" layout="joomla.form.field.radio.switcher"
+            label="ESR_CFG_INDEXING_NOINDEX_SEARCH" description="ESR_CFG_INDEXING_NOINDEX_SEARCH_DESC" default="1">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="noindex_paginated" type="radio" layout="joomla.form.field.radio.switcher"
+            label="ESR_CFG_INDEXING_NOINDEX_PAGINATED" description="ESR_CFG_INDEXING_NOINDEX_PAGINATED_DESC" default="0">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+    </fieldset>
+
     <fieldset name="business" label="ESR_CFG_BUSINESS">
         <field name="businesslisting_enabled" type="radio" layout="joomla.form.field.radio.switcher"
             label="JENABLED" default="0">
@@ -105,7 +172,7 @@
         <field name="sitemap_priority_min" type="number"
             label="ESR_CFG_SITEMAP_MIN" description="ESR_CFG_SITEMAP_MIN_DESC"
             default="0.1" min="0.0" max="1.0" step="0.1" />
-        <field name="sitemap_urls" type="note"
+        <field name="sitemap_urls" type="sitemapurl"
             label="ESR_CFG_SITEMAP_URLS"
             description="ESR_CFG_SITEMAP_URLS_DESC" />
     </fieldset>

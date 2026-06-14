@@ -41,7 +41,8 @@ final class GeradorJsonLd
     private array $contentTypes = [
         'article', 'book', 'course', 'event', 'product', 'movie', 'recipe',
         'review', 'factcheck', 'video', 'jobposting', 'faq', 'howto',
-        'localbusiness', 'service', 'person', 'organization', 'custom_code',
+        'localbusiness', 'service', 'person', 'organization',
+        'qapage', 'softwareapplication', 'custom_code',
     ];
 
     public function __construct(array|Registry|null $data = null)
@@ -164,8 +165,10 @@ final class GeradorJsonLd
             'localbusiness'  => $this->contentTypeLocalBusiness(),
             'service'        => $this->contentTypeService(),
             'person'         => $this->contentTypePerson(),
-            'organization'   => $this->contentTypeOrganization(),
-            'custom_code'    => $this->contentTypeCustom_Code(),
+            'organization'        => $this->contentTypeOrganization(),
+            'qapage'              => $this->contentTypeQAPage(),
+            'softwareapplication' => $this->contentTypeSoftwareApplication(),
+            'custom_code'         => $this->contentTypeCustom_Code(),
             'website'        => $this->contentTypeWebsite(),
             'logo'           => $this->contentTypeLogo(),
             'socialprofiles' => $this->contentTypeSocialProfiles(),
@@ -823,6 +826,79 @@ final class GeradorJsonLd
     /* ===================================================================
      *  Esquemas globais (usados pelo plugin de sistema)
      * =================================================================== */
+
+    private function contentTypeQAPage(): ?array
+    {
+        $question = trim((string) $this->data->get('question'));
+
+        if ($question === '') {
+            return null;
+        }
+
+        $mainEntity = [
+            '@type' => 'Question',
+            'name'  => $question,
+            'text'  => $this->data->get('question_detail'),
+        ];
+
+        $accepted = trim((string) $this->data->get('accepted_answer'));
+
+        if ($accepted !== '') {
+            $mainEntity['acceptedAnswer'] = [
+                '@type'       => 'Answer',
+                'text'        => $accepted,
+                'upvoteCount' => $this->data->get('accepted_answer_upvotes'),
+                'url'         => $this->data->get('accepted_answer_url'),
+            ];
+        }
+
+        $suggested = [];
+
+        foreach ((array) $this->data->get('suggested_answers') as $ans) {
+            $ans  = (array) $ans;
+            $text = trim((string) ($ans['text'] ?? ''));
+
+            if ($text !== '') {
+                $suggested[] = [
+                    '@type'       => 'Answer',
+                    'text'        => $text,
+                    'upvoteCount' => $ans['upvotes'] ?? null,
+                ];
+            }
+        }
+
+        if ($suggested !== []) {
+            $mainEntity['suggestedAnswer'] = $suggested;
+        }
+
+        $mainEntity['answerCount'] = ($accepted !== '' ? 1 : 0) + \count($suggested);
+
+        return ['@type' => 'QAPage', 'mainEntity' => $mainEntity];
+    }
+
+    private function contentTypeSoftwareApplication(): array
+    {
+        $content = [
+            '@type'               => $this->data->get('type', 'SoftwareApplication'),
+            'name'                => $this->data->get('name'),
+            'operatingSystem'     => $this->data->get('operatingSystem'),
+            'applicationCategory' => $this->data->get('applicationCategory'),
+        ];
+
+        $price = $this->data->get('price');
+
+        if ($price !== null && $price !== '') {
+            $content['offers'] = [
+                '@type'         => 'Offer',
+                'price'         => $price,
+                'priceCurrency' => $this->data->get('priceCurrency'),
+            ];
+        }
+
+        $this->addRating($content);
+
+        return $content;
+    }
 
     private function contentTypeWebsite(): array
     {

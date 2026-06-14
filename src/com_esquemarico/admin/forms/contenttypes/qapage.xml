@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Pergunta e Respostas (QAPage). Para páginas de uma única
+     pergunta com respostas (fóruns, Q&A). Use FAQ para listas de perguntas. -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="qapage">
+            <field name="question" type="text" size="60"
+                label="Pergunta" description="O título/enunciado da pergunta." />
+            <field name="question_detail" type="textarea" rows="3" label="Detalhe da pergunta" />
+            <field name="accepted_answer" type="textarea" rows="4" label="Resposta aceita" />
+            <field name="accepted_answer_upvotes" type="number" min="0" label="Votos da resposta aceita" />
+            <field name="accepted_answer_url" type="url" label="URL da resposta aceita" />
+            <field name="suggested_answers" type="subform" multiple="true"
+                label="Outras respostas"
+                description="Respostas sugeridas (não aceitas)."
+                layout="joomla.form.field.subform.repeatable-table">
+                <form>
+                    <field name="text" type="textarea" rows="2" label="Resposta" />
+                    <field name="upvotes" type="number" min="0" label="Votos" />
+                </form>
+            </field>
+        </fields>
+    </fieldset>
+</form>

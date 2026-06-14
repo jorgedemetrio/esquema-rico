@@ -83,6 +83,164 @@ final class SeoAnalyzer
     }
 
     /**
+     * Análise de LEGIBILIDADE (score independente do de SEO, estilo Yoast).
+     *
+     * @param  array{text?: string}  $data
+     *
+     * @return array{score: int, rating: string, checks: array<int, array{id: string, status: string, key: string, params: array}>}
+     */
+    public function readability(array $data): array
+    {
+        $html  = (string) ($data['text'] ?? '');
+        $plain = $this->plainText($html);
+
+        $checks = [
+            $this->checkFlesch($plain),
+            $this->checkSentenceLength($plain),
+            $this->checkParagraphLength($html),
+            $this->checkSubheadingDistribution($html, $plain),
+        ];
+
+        return [
+            'score'  => $this->score($checks),
+            'rating' => $this->rating($this->score($checks)),
+            'checks' => $checks,
+        ];
+    }
+
+    /**
+     * Índice Flesch de facilidade de leitura adaptado ao português.
+     */
+    private function checkFlesch(string $plain): array
+    {
+        $words     = $this->wordCount($plain);
+        $sentences = $this->sentenceCount($plain);
+
+        if ($words === 0 || $sentences === 0) {
+            return $this->mk('flesch', 'bad', ['score' => 0]);
+        }
+
+        $asl    = $words / $sentences;
+        $asw    = $this->syllableCount($plain) / $words;
+        $flesch = (int) round(max(0.0, min(100.0, 248.835 - (1.015 * $asl) - (84.6 * $asw))));
+
+        $status = match (true) {
+            $flesch >= 60 => 'good',
+            $flesch >= 40 => 'ok',
+            default       => 'bad',
+        };
+
+        return $this->mk('flesch', $status, ['score' => $flesch]);
+    }
+
+    /**
+     * Proporção de frases longas (> 20 palavras).
+     */
+    private function checkSentenceLength(string $plain): array
+    {
+        $sentences = preg_split('/[.!?…]+(?:\s|$)/u', $plain, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+        if ($sentences === []) {
+            return $this->mk('sentence_length', 'bad', ['pct' => 0, 'long' => 0, 'total' => 0]);
+        }
+
+        $long = 0;
+
+        foreach ($sentences as $s) {
+            if ($this->wordCount(trim($s)) > 20) {
+                $long++;
+            }
+        }
+
+        $total  = \count($sentences);
+        $pct    = (int) round($long / $total * 100);
+        $status = match (true) {
+            $pct <= 25 => 'good',
+            $pct <= 40 => 'ok',
+            default    => 'bad',
+        };
+
+        return $this->mk('sentence_length', $status, ['pct' => $pct, 'long' => $long, 'total' => $total]);
+    }
+
+    /**
+     * Parágrafos muito longos (> 150 palavras).
+     */
+    private function checkParagraphLength(string $html): array
+    {
+        if (preg_match_all('#<p\b[^>]*>(.*?)</p>#is', $html, $m) && $m[1] !== []) {
+            $paras = $m[1];
+        } else {
+            $paras = preg_split('/\n\s*\n/', strip_tags($html)) ?: [];
+        }
+
+        $long = 0;
+
+        foreach ($paras as $p) {
+            if ($this->wordCount($this->plainText($p)) > 150) {
+                $long++;
+            }
+        }
+
+        $status = match (true) {
+            $long === 0 => 'good',
+            $long === 1 => 'ok',
+            default     => 'bad',
+        };
+
+        return $this->mk('paragraph_length', $status, ['long' => $long]);
+    }
+
+    /**
+     * Distribuição de subtítulos: maior bloco de texto sem um H2–H6.
+     */
+    private function checkSubheadingDistribution(string $html, string $plain): array
+    {
+        if ($this->wordCount($plain) < 300) {
+            return $this->mk('subheading_distribution', 'good', ['longest' => $this->wordCount($plain)]);
+        }
+
+        $parts   = preg_split('/<h[2-6]\b[^>]*>.*?<\/h[2-6]>/is', $html) ?: [$html];
+        $longest = 0;
+
+        foreach ($parts as $part) {
+            $longest = max($longest, $this->wordCount($this->plainText($part)));
+        }
+
+        $status = match (true) {
+            $longest <= 300 => 'good',
+            $longest <= 500 => 'ok',
+            default         => 'bad',
+        };
+
+        return $this->mk('subheading_distribution', $status, ['longest' => $longest]);
+    }
+
+    /**
+     * Conta frases pelo número de terminadores (., !, ?, …); mínimo 1 se há texto.
+     */
+    private function sentenceCount(string $plain): int
+    {
+        return max((int) preg_match_all('/[.!?…]+(?:\s|$)/u', $plain), $plain === '' ? 0 : 1);
+    }
+
+    /**
+     * Aproxima a contagem de sílabas pelo número de grupos de vogais.
+     */
+    private function syllableCount(string $plain): int
+    {
+        $total = 0;
+
+        foreach (preg_split(self::WHITESPACE, mb_strtolower($plain)) ?: [] as $word) {
+            if ($word !== '') {
+                $total += max((int) preg_match_all('/[aeiouáàâãéêíóôõúü]+/u', $word), 1);
+            }
+        }
+
+        return $total;
+    }
+
+    /**
      * Pesos por verificação (algumas pesam mais).
      */
     private function weightOf(string $id): float

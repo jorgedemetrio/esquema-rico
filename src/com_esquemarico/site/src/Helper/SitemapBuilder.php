@@ -20,17 +20,18 @@ namespace Joomla\Component\Esquemarico\Site\Helper;
  */
 final class SitemapBuilder
 {
-    private const NS = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+    private const NS       = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+    private const NS_IMAGE = 'http://www.google.com/schemas/sitemap-image/1.1';
 
     /**
      * Monta um <urlset> a partir das entradas.
      *
-     * @param  array<int, array{loc: string, lastmod?: ?string, changefreq?: ?string, priority?: float|null}>  $entries
+     * @param  array<int, array{loc: string, lastmod?: ?string, changefreq?: ?string, priority?: float|null, images?: string[]}>  $entries
      */
     public static function urlset(array $entries): string
     {
         $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $xml .= '<urlset xmlns="' . self::NS . '">' . "\n";
+        $xml .= '<urlset xmlns="' . self::NS . '" xmlns:image="' . self::NS_IMAGE . '">' . "\n";
 
         foreach ($entries as $e) {
             if (empty($e['loc'])) {
@@ -50,6 +51,14 @@ final class SitemapBuilder
 
             if (isset($e['priority']) && $e['priority'] !== null) {
                 $xml .= '    <priority>' . number_format((float) $e['priority'], 1, '.', '') . "</priority>\n";
+            }
+
+            foreach ($e['images'] ?? [] as $img) {
+                if ((string) $img === '') {
+                    continue;
+                }
+
+                $xml .= '    <image:image><image:loc>' . self::esc((string) $img) . "</image:loc></image:image>\n";
             }
 
             $xml .= "  </url>\n";

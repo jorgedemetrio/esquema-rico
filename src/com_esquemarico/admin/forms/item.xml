@@ -61,4 +61,8 @@
         <field name="created" type="hidden" />
         <field name="created_by" type="hidden" />
     </fieldset>
+
+    <fieldset name="preview" label="ESR_ITEM_FIELDSET_PREVIEW">
+        <field name="schema_preview" type="schemapreview" label="" />
+    </fieldset>
 </form>

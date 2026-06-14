@@ -15,6 +15,7 @@ use Esquemarico\Core\Functions;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Esquemarico\Administrator\Engine\GeradorJsonLd;
 use Joomla\Component\Esquemarico\Administrator\Helper\EsquemaRicoHelper;
 use Joomla\Component\Esquemarico\Administrator\Helper\SchemaCleaner;
@@ -69,7 +70,10 @@ final class Esquemarico extends CMSPlugin implements SubscriberInterface
             Factory::getApplication()->getDocument()->addCustomTag($markup);
         }
 
+        $this->aplicarTemplateTitulo();
+        $this->metaCanonicalERobos();
         $this->controleSnippetRobos();
+        $this->metaOpenGraph();
     }
 
     /**
@@ -123,7 +127,13 @@ final class Esquemarico extends CMSPlugin implements SubscriberInterface
         // Plugins de integração contribuem com seus blocos.
         EsquemaRicoHelper::event('onEsquemaRicoBeforeRender', [&$blocos]);
 
-        $markup = implode("\n", array_filter($blocos));
+        $blocos = array_filter($blocos);
+
+        if ($this->globais->get('combine_graph', 0)) {
+            $blocos = $this->combinarGraph($blocos);
+        }
+
+        $markup = implode("\n", $blocos);
 
         if (trim($markup) === '') {
             return null;
@@ -134,6 +144,59 @@ final class Esquemarico extends CMSPlugin implements SubscriberInterface
         }
 
         return "\n<!-- Início: Esquema Rico -->\n" . $markup . "\n<!-- Fim: Esquema Rico -->\n";
+    }
+
+    /**
+     * Consolida os blocos JSON-LD da extensão (data-type="esr") num único
+     * <script> com @graph, deixando intactos os blocos que não são JSON
+     * válido (ex.: código personalizado). Só consolida com 2+ nós.
+     *
+     * @param  string[]  $blocos
+     * @return string[]
+     */
+    private function combinarGraph(array $blocos): array
+    {
+        $nodes  = [];
+        $outros = [];
+
+        foreach ($blocos as $bloco) {
+            if (
+                !str_contains($bloco, 'data-type="esr"')
+                || !preg_match('#<script[^>]*>(.*?)</script>#is', $bloco, $m)
+            ) {
+                $outros[] = $bloco;
+
+                continue;
+            }
+
+            $json = json_decode(trim($m[1]), true);
+
+            if (!\is_array($json) || !isset($json['@type'])) {
+                $outros[] = $bloco;
+
+                continue;
+            }
+
+            unset($json['@context']);
+            $nodes[] = $json;
+        }
+
+        if (\count($nodes) < 2) {
+            return $blocos;
+        }
+
+        $graph = json_encode(
+            ['@context' => 'https://schema.org', '@graph' => $nodes],
+            JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+        );
+
+        if ($graph === false) {
+            return $blocos;
+        }
+
+        $combinado = "\n" . '<script type="application/ld+json" data-type="esr">' . "\n" . $graph . "\n" . '</script>';
+
+        return array_merge([$combinado], $outros);
     }
 
     /* ===================================================================
@@ -298,6 +361,178 @@ final class Esquemarico extends CMSPlugin implements SubscriberInterface
         $robots = $robots === '' ? $value : $robots . ', ' . $value;
 
         $doc->setMetaData('robots', $robots);
+    }
+
+    /* ===================================================================
+     *  Template de título (<title>)
+     * =================================================================== */
+
+    /**
+     * Reescreve o <title> a partir de um template configurável, com variáveis
+     * %title%, %sitename% e %sep%. A home pode ter um título próprio. Opt-in.
+     *
+     * Use com a opção "Nome do site nos títulos das páginas" do Joomla
+     * desligada, para o nome do site não aparecer duplicado.
+     */
+    private function aplicarTemplateTitulo(): void
+    {
+        if (!$this->globais->get('title_template_enabled', 0)) {
+            return;
+        }
+
+        $doc  = Factory::getApplication()->getDocument();
+        $home = EsquemaRicoHelper::isFrontPage() ? trim((string) $this->globais->get('title_home', '')) : '';
+
+        if ($home !== '') {
+            $doc->setTitle($home);
+
+            return;
+        }
+
+        $template = trim((string) $this->globais->get('title_template', '%title% %sep% %sitename%'));
+
+        if ($template === '') {
+            return;
+        }
+
+        $novo = strtr($template, [
+            '%title%'    => (string) $doc->getTitle(),
+            '%sitename%' => EsquemaRicoHelper::getSiteName(),
+            '%sep%'      => (string) $this->globais->get('title_separator', '-'),
+        ]);
+
+        // Colapsa espaços duplicados (ex.: quando %title% resolve para vazio).
+        $novo = trim((string) preg_replace('/\s{2,}/', ' ', $novo));
+
+        if ($novo !== '') {
+            $doc->setTitle($novo);
+        }
+    }
+
+    /* ===================================================================
+     *  Canonical e controle de indexação (robots)
+     * =================================================================== */
+
+    /**
+     * Adiciona o canonical autorreferente (quando ausente e habilitado) e
+     * aplica "noindex, follow" em páginas finas/duplicadas típicas do Joomla
+     * (resultados de busca e, opcionalmente, páginas paginadas).
+     */
+    private function metaCanonicalERobos(): void
+    {
+        $app   = Factory::getApplication();
+        $doc   = $app->getDocument();
+        $input = $app->getInput();
+
+        // Canonical autorreferente (opt-in; recomendado com URLs SEF).
+        if ($this->globais->get('canonical_enabled', 0) && !$this->temCanonical($doc)) {
+            $doc->addHeadLink(Uri::current(), 'canonical');
+        }
+
+        $noindex = false;
+
+        if ($this->globais->get('noindex_search', 1)
+            && \in_array($input->getCmd('option'), ['com_search', 'com_finder'], true)) {
+            $noindex = true;
+        }
+
+        if (!$noindex && $this->globais->get('noindex_paginated', 0) && (int) $input->get('limitstart', 0) > 0) {
+            $noindex = true;
+        }
+
+        if ($noindex) {
+            $robots = trim((string) $doc->getMetaData('robots'));
+
+            if ($robots === '') {
+                $doc->setMetaData('robots', 'noindex, follow');
+            } elseif (!Functions::strposArr(['noindex'], $robots)) {
+                // Preserva as diretivas já presentes (nofollow, noarchive, max-*)
+                // e apenas acrescenta noindex.
+                $doc->setMetaData('robots', $robots . ', noindex');
+            }
+        }
+    }
+
+    /**
+     * Indica se a página já possui um <link rel="canonical"> (do componente
+     * ou do template) — para não duplicá-lo.
+     */
+    private function temCanonical(object $doc): bool
+    {
+        foreach ((array) ($doc->getHeadData()['links'] ?? []) as $data) {
+            if (\is_array($data) && ($data['relation'] ?? '') === 'canonical') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /* ===================================================================
+     *  Open Graph / Twitter Cards
+     * =================================================================== */
+
+    /**
+     * Gera as meta tags Open Graph e Twitter Cards a partir dos metadados da
+     * página (título, descrição, URL) e da identidade do site. Não sobrescreve
+     * tags já definidas pelo template ou por outra extensão.
+     */
+    private function metaOpenGraph(): void
+    {
+        if (!$this->globais->get('og_enabled', 1)) {
+            return;
+        }
+
+        $app   = Factory::getApplication();
+        $doc   = $app->getDocument();
+        $title = (string) ($doc->getTitle() ?: EsquemaRicoHelper::getSiteName());
+        $desc  = (string) $doc->getDescription();
+        $image = (string) ($this->globais->get('og_default_image') ?: EsquemaRicoHelper::getSiteLogo());
+        $image = $image !== '' ? (string) EsquemaRicoHelper::cleanImage($image) : '';
+
+        $og = [
+            'og:locale'      => str_replace('-', '_', $app->getLanguage()->getTag()),
+            'og:type'        => EsquemaRicoHelper::isFrontPage() ? 'website' : 'article',
+            'og:title'       => $title,
+            'og:description' => $desc,
+            'og:url'         => Uri::current(),
+            'og:site_name'   => EsquemaRicoHelper::getSiteName(),
+            'og:image'       => $image,
+        ];
+
+        foreach ($og as $prop => $value) {
+            $this->definirMeta($doc, $prop, (string) $value, 'property');
+        }
+
+        // Twitter Cards espelham o Open Graph.
+        $handle  = trim((string) $this->globais->get('og_twitter_site'));
+        $twitter = [
+            'twitter:card'        => (string) $this->globais->get('og_twitter_card', 'summary_large_image'),
+            'twitter:title'       => $title,
+            'twitter:description' => $desc,
+            'twitter:image'       => $image,
+        ];
+
+        if ($handle !== '') {
+            $twitter['twitter:site'] = str_starts_with($handle, '@') ? $handle : '@' . $handle;
+        }
+
+        foreach ($twitter as $name => $value) {
+            $this->definirMeta($doc, $name, (string) $value, 'name');
+        }
+    }
+
+    /**
+     * Define uma meta tag apenas se houver valor e ela ainda não existir
+     * (não sobrescreve o que o template ou outra extensão já definiu).
+     */
+    private function definirMeta(object $doc, string $key, string $value, string $attribute): void
+    {
+        if ($value === '' || (string) $doc->getMetaData($key, $attribute) !== '') {
+            return;
+        }
+
+        $doc->setMetaData($key, $value, $attribute);
     }
 
     /* ===================================================================

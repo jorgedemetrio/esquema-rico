@@ -94,7 +94,7 @@ class SitemapModel extends BaseDatabaseModel
         $this->init();
         $db    = $this->getDatabase();
         $query = $db->getQuery(true)
-            ->select(['c.id', 'c.alias', 'c.catid', 'c.created', 'c.modified', 'c.language'])
+            ->select(['c.id', 'c.alias', 'c.catid', 'c.created', 'c.modified', 'c.language', 'c.images'])
             ->from($db->quoteName('#__content', 'c'))
             ->where($db->quoteName('c.state') . ' = 1')
             ->whereIn($db->quoteName('c.access'), $this->levels)
@@ -104,11 +104,49 @@ class SitemapModel extends BaseDatabaseModel
         $entries = [];
 
         foreach ($this->loadRows($query) as $row) {
-            $url = 'index.php?option=com_content&view=article&id=' . (int) $row->id . ':' . $row->alias . '&catid=' . (int) $row->catid;
-            $entries[] = $this->entry($url, $row->modified, $row->created);
+            $url   = 'index.php?option=com_content&view=article&id=' . (int) $row->id . ':' . $row->alias . '&catid=' . (int) $row->catid;
+            $entry = $this->entry($url, $row->modified, $row->created);
+
+            if ($images = $this->articleImages($row->images ?? null)) {
+                $entry['images'] = $images;
+            }
+
+            $entries[] = $entry;
         }
 
         return SitemapBuilder::urlset($entries);
+    }
+
+    /**
+     * Extrai as imagens (intro e fulltext) de um artigo como URLs absolutas,
+     * para o sitemap de imagens. Lê o campo JSON "images" do com_content.
+     *
+     * @return string[]
+     */
+    private function articleImages(?string $imagesJson): array
+    {
+        if (!$imagesJson) {
+            return [];
+        }
+
+        $data = json_decode($imagesJson, true);
+
+        if (!\is_array($data)) {
+            return [];
+        }
+
+        $images = [];
+
+        foreach (['image_intro', 'image_fulltext'] as $key) {
+            $src = trim((string) ($data[$key] ?? ''));
+
+            if ($src !== '') {
+                // Chaveado pela origem para deduplicar intro == fulltext.
+                $images[$src] = (string) EsquemaRicoHelper::cleanImage($src);
+            }
+        }
+
+        return array_values(array_filter($images));
     }
 
     /**

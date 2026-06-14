@@ -97,13 +97,25 @@ final class SitemapTest extends TestCase
             ['loc' => 'https://site/artigo-2', 'priority' => 0.3],
         ]);
 
-        $this->assertStringContainsString('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">', $xml);
+        $this->assertStringContainsString('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"', $xml);
         $this->assertStringContainsString('<loc>https://site/artigo-1</loc>', $xml);
         $this->assertStringContainsString('<priority>1.0</priority>', $xml);
         $this->assertStringContainsString('<priority>0.3</priority>', $xml);
         $this->assertStringContainsString('<changefreq>daily</changefreq>', $xml);
 
         // XML bem-formado.
+        $this->assertInstanceOf(\SimpleXMLElement::class, simplexml_load_string($xml));
+    }
+
+    public function testUrlsetIncluiImagens(): void
+    {
+        $xml = SitemapBuilder::urlset([
+            ['loc' => 'https://site/artigo', 'priority' => 0.8, 'images' => ['https://site/a.jpg', 'https://site/b.jpg']],
+        ]);
+
+        $this->assertStringContainsString('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"', $xml);
+        $this->assertStringContainsString('<image:image><image:loc>https://site/a.jpg</image:loc></image:image>', $xml);
+        $this->assertStringContainsString('<image:image><image:loc>https://site/b.jpg</image:loc></image:image>', $xml);
         $this->assertInstanceOf(\SimpleXMLElement::class, simplexml_load_string($xml));
     }
 

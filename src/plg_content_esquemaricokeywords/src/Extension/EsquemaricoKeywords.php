@@ -18,13 +18,14 @@ use Joomla\Event\SubscriberInterface;
 \defined('_JEXEC') or die;
 
 /**
- * Corrige a ausência da meta keywords nas páginas de artigo.
+ * Completa metadados ausentes nas páginas de artigo: meta keywords e meta
+ * description.
  *
  * Em vários templates/versões o Joomla deixou de emitir
- * `<meta name="keywords">` a partir das palavras-chave do artigo. Este plugin
- * garante a emissão, pegando as keywords da matéria (e, opcionalmente, suas
- * tags) e adicionando-as ao documento. O Google pode não usar, mas outros
- * buscadores ainda consideram.
+ * `<meta name="keywords">` a partir das palavras-chave do artigo; este plugin
+ * garante a emissão (metakey + tags). Além disso, quando o artigo não tem
+ * descrição, gera uma a partir do início do conteúdo — o que também alimenta o
+ * og:description. Nunca sobrescreve metadados já presentes.
  */
 final class EsquemaricoKeywords extends CMSPlugin implements SubscriberInterface
 {
@@ -55,19 +56,63 @@ final class EsquemaricoKeywords extends CMSPlugin implements SubscriberInterface
             return;
         }
 
+        $doc = $app->getDocument();
+
+        // Meta keywords: completa quando ausente (não sobrescreve).
         $keywords = $this->coletarKeywords($item);
 
-        if ($keywords === '') {
+        if ($keywords !== '' && trim((string) $doc->getMetaData('keywords')) === '') {
+            $doc->setMetaData('keywords', $keywords);
+        }
+
+        // Meta description: gera a partir do conteúdo quando ausente.
+        $this->preencherDescricao($doc, $item);
+    }
+
+    /**
+     * Gera a meta description a partir do conteúdo do artigo quando não há uma
+     * (do artigo ou do template). Também alimenta o og:description.
+     */
+    private function preencherDescricao(object $doc, object $item): void
+    {
+        if (!$this->params->get('auto_description', 1) || trim((string) $doc->getDescription()) !== '') {
             return;
         }
 
-        $doc      = $app->getDocument();
-        $existing = (string) $doc->getMetaData('keywords');
+        $texto = trim((string) ($item->introtext ?? '') . ' ' . (string) ($item->fulltext ?? ''));
 
-        // Não sobrescreve uma meta keywords já presente; complementa apenas se vazia.
-        if (trim($existing) === '') {
-            $doc->setMetaData('keywords', $keywords);
+        if ($texto === '') {
+            $texto = (string) ($item->text ?? '');
         }
+
+        $desc = $this->resumir($texto, 160);
+
+        if ($desc !== '') {
+            $doc->setDescription($desc);
+        }
+    }
+
+    /**
+     * Resume um trecho de HTML em texto plano, truncado em ~$max caracteres
+     * num limite de palavra.
+     */
+    private function resumir(string $html, int $max): string
+    {
+        $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = trim((string) preg_replace('/\s+/u', ' ', $text));
+
+        if ($text === '' || mb_strlen($text) <= $max) {
+            return $text;
+        }
+
+        $cut = mb_substr($text, 0, $max);
+        $sp  = mb_strrpos($cut, ' ');
+
+        if ($sp !== false && $sp > 0) {
+            $cut = mb_substr($cut, 0, $sp);
+        }
+
+        return rtrim($cut, " ,.;:-") . '…';
     }
 
     /**

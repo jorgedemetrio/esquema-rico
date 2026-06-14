@@ -270,7 +270,53 @@ final class GeradorJsonLdTest extends TestCase
         $this->assertContains('article', $tipos);
         $this->assertContains('product', $tipos);
         $this->assertContains('event', $tipos);
+        $this->assertContains('qapage', $tipos);
+        $this->assertContains('softwareapplication', $tipos);
         // Código personalizado deve ser o último da lista.
         $this->assertSame('custom_code', end($tipos));
+    }
+
+    public function testQAPage(): void
+    {
+        $json = $this->gerar([
+            'contentType'             => 'qapage',
+            'question'                => 'Como instalar o componente?',
+            'question_detail'         => 'Passo a passo da instalação.',
+            'accepted_answer'         => 'Baixe o pacote e instale pelo gestor de extensões.',
+            'accepted_answer_upvotes' => '10',
+            'suggested_answers'       => [
+                ['text' => 'Use o instalador via URL.', 'upvotes' => '3'],
+            ],
+        ]);
+
+        $this->assertSame('QAPage', $json['@type']);
+        $this->assertSame('Question', $json['mainEntity']['@type']);
+        $this->assertSame('Como instalar o componente?', $json['mainEntity']['name']);
+        $this->assertSame('Answer', $json['mainEntity']['acceptedAnswer']['@type']);
+        $this->assertSame('Baixe o pacote e instale pelo gestor de extensões.', $json['mainEntity']['acceptedAnswer']['text']);
+        $this->assertSame(2, $json['mainEntity']['answerCount']);
+        $this->assertSame('Use o instalador via URL.', $json['mainEntity']['suggestedAnswer'][0]['text']);
+    }
+
+    public function testSoftwareApplication(): void
+    {
+        $json = $this->gerar([
+            'contentType'         => 'softwareapplication',
+            'type'                => 'WebApplication',
+            'name'                => 'Meu App',
+            'operatingSystem'     => 'Android, iOS',
+            'applicationCategory' => 'BusinessApplication',
+            'price'               => '0',
+            'priceCurrency'       => 'BRL',
+            'ratingValue'         => '4.5',
+            'reviewCount'         => '120',
+        ]);
+
+        $this->assertSame('WebApplication', $json['@type']);
+        $this->assertSame('Meu App', $json['name']);
+        $this->assertSame('Offer', $json['offers']['@type']);
+        $this->assertSame('0', $json['offers']['price']);
+        $this->assertSame('AggregateRating', $json['aggregateRating']['@type']);
+        $this->assertSame('4.5', $json['aggregateRating']['ratingValue']);
     }
 }

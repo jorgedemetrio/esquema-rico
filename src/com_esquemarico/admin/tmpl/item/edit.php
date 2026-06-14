@@ -25,7 +25,7 @@ $hasType = !empty($this->item->contenttype);
 $conditionFieldsets = [];
 
 foreach (array_keys($this->form->getFieldsets()) as $fsName) {
-    if (!\in_array($fsName, ['geral', 'contenttype'], true)) {
+    if (!\in_array($fsName, ['geral', 'contenttype', 'preview'], true)) {
         $conditionFieldsets[] = $fsName;
     }
 }
@@ -57,6 +57,16 @@ foreach (array_keys($this->form->getFieldsets()) as $fsName) {
                     <?php endif; ?>
                 </div>
             <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+            <?php if ($hasType) : ?>
+                <?php echo HTMLHelper::_('uitab.addTab', 'itemTab', 'preview', Text::_('ESR_ITEM_FIELDSET_PREVIEW')); ?>
+                    <div class="card card-body mb-3">
+                        <?php foreach ($this->form->getFieldset('preview') as $field) : ?>
+                            <?php echo $field->input; ?>
+                        <?php endforeach; ?>
+                    </div>
+                <?php echo HTMLHelper::_('uitab.endTab'); ?>
+            <?php endif; ?>
 
             <?php if ($hasType && $conditionFieldsets) : ?>
                 <?php echo HTMLHelper::_('uitab.addTab', 'itemTab', 'conditions', Text::_('ESR_ITEM_FIELDSET_CONDITIONS')); ?>

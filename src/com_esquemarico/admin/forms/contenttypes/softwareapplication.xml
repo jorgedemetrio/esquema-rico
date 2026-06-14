@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Aplicativo (SoftwareApplication).
+     O Google exige nota (rating) OU oferta (preço) para o rich result. -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="softwareapplication">
+            <field name="type" type="list" label="Tipo de aplicativo" default="SoftwareApplication">
+                <option value="SoftwareApplication">SoftwareApplication</option>
+                <option value="WebApplication">WebApplication</option>
+                <option value="MobileApplication">MobileApplication</option>
+                <option value="VideoGame">VideoGame</option>
+            </field>
+            <field name="name" type="text" size="50" label="Nome do aplicativo" />
+            <field name="operatingSystem" type="text" label="Sistema operacional"
+                hint="Android, iOS, Windows..." />
+            <field name="applicationCategory" type="text" label="Categoria"
+                hint="GameApplication, BusinessApplication..." />
+            <field name="price" type="text" label="Preço" hint="0.00" />
+            <field name="priceCurrency" type="text" label="Moeda" hint="BRL" />
+            <field name="rating_value" type="text" label="Nota média" hint="4.5" />
+            <field name="review_count" type="text" label="Número de avaliações" hint="120" />
+        </fields>
+    </fieldset>
+</form>

@@ -54,6 +54,34 @@ O formato segue, de forma simplificada, o [Keep a Changelog](https://keepachange
   título/URL/descrição/texto/subtítulo, densidade, imagens com alt, links, subtítulos) no
   editor de artigos. Núcleo `SeoAnalyzer` com testes unitários.
 
+#### Lote de SEO (2026-06)
+- **Open Graph e Twitter Cards** (`plg_system_esquemarico` + config "opengraph"): gera as
+  meta tags `og:*` e `twitter:*` (locale, type, title, description, url, site_name, image,
+  card, site) a partir dos metadados da página e da identidade do site, sem sobrescrever
+  tags já presentes.
+- **Canonical e controle de indexação** (config "indexing"): canonical autorreferente quando
+  ausente (opt-in) e `noindex, follow` em resultados de busca (com_search/com_finder) e,
+  opcionalmente, em páginas paginadas.
+- **Sitemap de imagens**: namespace `image` e `<image:image>` com as imagens intro/fulltext
+  dos artigos no sitemap de conteúdo (teste unitário incluído).
+- **Análise de legibilidade** (estilo Yoast, `SeoAnalyzer::readability()`): pontuação
+  independente com índice Flesch adaptado ao PT-BR, proporção de frases longas, parágrafos
+  longos e distribuição de subtítulos; segundo medidor no painel.
+- **Template de `<title>`** (config "titles"): modelo configurável com `%title%`,
+  `%sitename%` e `%sep%`, e título próprio para a página inicial (opt-in).
+- **Consolidação em `@graph`** (config "jsonld", opt-in): junta os blocos JSON-LD da página
+  num único `<script>` com `@graph`, preservando o `@id` de cada nó.
+- **Novos tipos de schema**: `QAPage` (pergunta única com `acceptedAnswer`/`suggestedAnswer`)
+  e `SoftwareApplication` (`offers` + `aggregateRating`), com formulários, idiomas e testes.
+- **Preview e validação de Rich Results no editor** (`SchemaPreviewField`): gera o JSON-LD do
+  item sobre os dados salvos, faz lint estrutural (`@context`/`@type`) e mostra o JSON, com
+  atalho para o Teste de Resultados Avançados do Google.
+- **Auto meta description** (`plg_content_esquemaricokeywords`): quando o artigo não tem
+  descrição, gera uma a partir do início do conteúdo (~160 caracteres) — também alimenta o
+  `og:description`. Opt-out por parâmetro.
+- **Atalho de sitemap/robots** (`SitemapUrlField`): mostra a URL pública do índice de sitemap
+  e a linha `Sitemap:` pronta para colar no `robots.txt`.
+
 ### Corrigido
 - **Meta keywords** voltam a ser emitidas nas páginas de artigo (`plg_content_esquemaricokeywords`),
   a partir das palavras-chave e tags da matéria (sem sobrescrever uma já existente).
@@ -62,8 +90,10 @@ O formato segue, de forma simplificada, o [Keep a Changelog](https://keepachange
   biblioteca compartilhada.
 
 ### Pendente
-- Backend completo (CRUD de itens, campos de mapeamento, configurações globais).
-- Demais integrações (e-commerce, eventos, etc.).
-- Testes automatizados e validação no Teste de Resultados Avançados do Google.
+- Sub-itens de SEO de menor prioridade: `hreflang`, sitemaps de vídeo/notícias, `gzip` e
+  ping aos buscadores no sitemap; preview de snippet ao vivo no editor de artigos.
+- Redirecionamentos 404 → 301: usar o componente nativo do Joomla (`com_redirect`) em vez de
+  reimplementar.
+- Demais integrações e validação contínua no Teste de Resultados Avançados do Google.
 
 Ver `TODO.md` para o detalhamento por fase.

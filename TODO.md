@@ -24,6 +24,9 @@ Legenda: `[ ]` pendente · `[~]` em andamento · `[x]` concluído · 🔑 caminh
 | 9 | Demais integrações (e-commerce, eventos, …) | `[~]` |
 | 10 | Empacotamento, instalação, atualização | `[~]` |
 | 11 | Qualidade: testes, validação Google, i18n | `[~]` |
+| 12 | SEO: Sitemaps XML (+ imagens, canonical) | `[~]` |
+| 13 | SEO de conteúdo (keywords, análise, legibilidade) | `[~]` |
+| 14 | SEO técnico e metadados (OG, canonical, título, @graph) | `[~]` |
 
 ---
 
@@ -80,6 +83,7 @@ Legenda: `[ ]` pendente · `[~]` em andamento · `[x]` concluído · 🔑 caminh
   - [x] Negócio Local, Organização, Pessoa, Curso, Livro, Filme
   - [x] Avaliação, Vaga, Serviço, Vídeo, Checagem de Fatos, Código Personalizado
   - [x] Globais: WebSite, Logo, Perfis Sociais, Breadcrumbs
+  - [x] QAPage (Pergunta & Respostas) e SoftwareApplication — lote SEO 2026-06
 - [x] `admin/src/Schema/Base.php` — preparação comum (datas, URLs, limpeza, rename).
 - [x] `admin/src/Schema/SchemaHelper.php` — *factory* de tipo.
 - [x] `admin/src/Schema/Tipos/Article.php` e `Custom_Code.php` (especializações).
@@ -123,6 +127,8 @@ Legenda: `[ ]` pendente · `[~]` em andamento · `[x]` concluído · 🔑 caminh
   - [x] `MapField`, `MapImageField`, `MapDateField`, `MapUserField` (seletor de mapeamento).
   - [x] `OpeningHoursField` (horário de funcionamento — completa o Negócio Local).
   - [x] `BusinessTypesField` (subtipos de Negócio Local) e `OrganizationTypesField`.
+  - [x] `SchemaPreviewField` (preview/validação do JSON-LD no editor do item) e
+        `SitemapUrlField` (URL do sitemap + linha do robots.txt) — lote SEO 2026-06.
   - [x] `FastEditField` v1 — painel na aba "Esquema Rico" do editor de artigos com acesso
         de um clique a criar/gerenciar itens.
   - [ ] `FastEditField` v2 — editor totalmente inline (AJAX para carregar os campos do tipo
@@ -132,7 +138,8 @@ Legenda: `[ ]` pendente · `[~]` em andamento · `[x]` concluído · 🔑 caminh
 - [x] `forms/contenttypes/*.xml` para os 18 tipos (todos criados, alinhados ao gerador).
 - [x] Painel (dashboard) com atalhos e status do plugin.
 - [x] Toolbar, paginação, busca, filtros, ordenação na lista de itens.
-- [ ] Testador embutido no painel (validação JSON-LD).
+- [x] Testador/preview de JSON-LD no editor do item (`SchemaPreviewField`: gera o JSON-LD,
+      faz lint estrutural e linka o Teste de Resultados Avançados) — lote SEO 2026-06.
 - [ ] Ativos JS/CSS em `media/` via `joomla.asset.json` (hoje o JS do MapField é inline).
 - [ ] Verificar filtragem de valores de array do `MapField` na validação do formulário.
 
@@ -151,6 +158,8 @@ Legenda: `[ ]` pendente · `[~]` em andamento · `[x]` concluído · 🔑 caminh
       Perfis Sociais, Negócio Local e Avançado (remover microdados, código personalizado).
 - [x] `ConfigModel` + `ConfigController` persistindo a linha `config`.
 - [x] Renderizar cada esquema global no plugin de sistema (Fase 4).
+- [x] Seções novas na config: Open Graph, Indexação (canonical/noindex), Título e JSON-LD
+      (@graph) — lote SEO 2026-06.
 - [ ] Adicionar abas de Tipos de Conteúdo e Integrações (ativar/desativar) na config.
 
 ## Fase 9 — Demais integrações `[~]`
@@ -209,7 +218,10 @@ Prioridade (alto → baixo valor de mercado):
 - [x] `SitemapModel` (conteúdo, categorias, menu, tags) + `DisplayController` de site.
 - [x] Índice + 4 sub-sitemaps; `priority` por recência, `changefreq` por idade, `lastmod`.
 - [x] Aba de configuração (janela/min/max) + documentação (`12-sitemap.md`, `analise-seo.md`).
-- [ ] (Opcional) `robots.txt`/IndexNow, canonical/hreflang, `width`/`height` em imagens.
+- [x] Sitemap de **imagens** (intro/fulltext); **canonical** autorreferente; atalho de
+      `robots.txt` (linha `Sitemap:`) — lote SEO 2026-06.
+- [ ] (Opcional) `hreflang`/vídeo/notícias no sitemap, IndexNow/ping, `width`/`height` nas
+      imagens, `gzip`.
 
 ## Fase 13 — SEO de conteúdo `[~]`
 
@@ -217,7 +229,23 @@ Prioridade (alto → baixo valor de mercado):
 - [x] `plg_content_esquemaricoseo` + `SeoAnalyzer` — análise/score de SEO estilo Yoast no
       editor (regras de SEO conhecidas), com testes unitários.
 - [x] Documentação (`13-keywords-e-analise-seo.md`) e atualização da análise de SEO.
-- [ ] (Opcional) Análise live por JS (recalcular a nota a cada tecla, sem salvar).
+- [x] Análise de **legibilidade** (Flesch PT-BR, frases/parágrafos, subtítulos) — score
+      independente do de SEO — lote SEO 2026-06.
+- [x] Auto **meta description** a partir do conteúdo (também alimenta `og:description`),
+      opt-out por parâmetro — lote SEO 2026-06.
+- [ ] (Opcional) Análise live por JS e preview de snippet ao vivo no editor de artigos.
+
+## Fase 14 — SEO técnico e metadados (lote 2026-06) `[~]`
+
+- [x] **Open Graph + Twitter Cards** (`plg_system_esquemarico` + config "opengraph"), sem
+      sobrescrever tags já presentes.
+- [x] **Canonical autorreferente** + `noindex, follow` em busca/paginação (config "indexing").
+- [x] **Template de `<title>`** com `%title%`/`%sitename%`/`%sep%` + título da home (config "titles").
+- [x] **Consolidação `@graph`** opcional dos blocos JSON-LD (config "jsonld").
+- [x] **Preview/validação** de Rich Results no editor (`SchemaPreviewField`).
+- [x] **Auto meta description** e **legibilidade** (ver Fases 12/13).
+- [ ] `hreflang` (associações multilíngues) e preview de snippet ao vivo.
+- [ ] 404 → 301: usar o `com_redirect` nativo do Joomla (não reimplementar).
 
 ## Decisões técnicas registradas
 
