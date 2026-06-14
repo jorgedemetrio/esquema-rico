@@ -33,6 +33,13 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
+                <field name="auto_description" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_CONTENT_ESQUEMARICOKEYWORDS_AUTO_DESCRIPTION"
+                    description="PLG_CONTENT_ESQUEMARICOKEYWORDS_AUTO_DESCRIPTION_DESC"
+                    default="1">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
             </fieldset>
         </fields>
     </config>
