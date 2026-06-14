@@ -441,10 +441,14 @@ final class Esquemarico extends CMSPlugin implements SubscriberInterface
         }
 
         if ($noindex) {
-            $robots = (string) $doc->getMetaData('robots');
+            $robots = trim((string) $doc->getMetaData('robots'));
 
-            if (!Functions::strposArr(['noindex'], $robots)) {
+            if ($robots === '') {
                 $doc->setMetaData('robots', 'noindex, follow');
+            } elseif (!Functions::strposArr(['noindex'], $robots)) {
+                // Preserva as diretivas já presentes (nofollow, noarchive, max-*)
+                // e apenas acrescenta noindex.
+                $doc->setMetaData('robots', $robots . ', noindex');
             }
         }
     }

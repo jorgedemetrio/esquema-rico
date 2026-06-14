@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use Joomla\Component\Esquemarico\Administrator\Engine\GeradorJsonLd;
+use Joomla\Component\Esquemarico\Administrator\Helper\MappingOptions;
 use Joomla\Component\Esquemarico\Administrator\Schema\SchemaHelper;
 use Joomla\Registry\Registry;
 
@@ -83,11 +84,24 @@ class SchemaPreviewField extends FormField
         }
 
         try {
-            $grupo    = $this->form?->getData()->get($type);
-            $registry = new Registry(\is_array($grupo) || \is_object($grupo) ? (array) $grupo : []);
-            $registry->set('contentType', $type);
+            $grupo   = $this->form?->getData()->get($type);
+            $snippet = new Registry(\is_array($grupo) || \is_object($grupo) ? (array) $grupo : []);
+            $snippet->set('contentType', $type);
 
-            $prepared = SchemaHelper::getInstance($type)->setData($registry)->get();
+            // Mesma preparação do frontend (PluginBase::preparePayload), porém sem
+            // fonte de conteúdo no admin: resolve os modos de mapeamento
+            // ({option, fixed, custom}) e as SmartTags em vez de enviar a estrutura
+            // crua do MapField ao gerador. Campos mapeados ao conteúdo ficam vazios
+            // aqui (o valor vem da página publicada).
+            $payload = new Registry();
+            $schema  = SchemaHelper::getInstance($type);
+            $schema->onPayloadPrepare($payload);
+
+            MappingOptions::prepare($snippet);
+            $merged = (clone $payload)->merge($snippet, false);
+            $merged = MappingOptions::replace($merged, $payload);
+
+            $prepared = $schema->setData($merged)->get();
             $prepared->set('contentType', $type);
 
             $generated = (new GeradorJsonLd($prepared))->generate();

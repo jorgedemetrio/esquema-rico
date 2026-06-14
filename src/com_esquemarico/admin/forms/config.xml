@@ -3,7 +3,7 @@
     Configurações globais (esquemas globais). Persistidas na linha "config" de
     #__esquemarico_config e lidas pelo plugin de sistema na renderização.
 -->
-<form>
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
     <fieldset name="sitename" label="ESR_CFG_SITENAME">
         <field name="sitename_enabled" type="radio" layout="joomla.form.field.radio.switcher"
             label="JENABLED" default="1">
