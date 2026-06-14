@@ -13,6 +13,7 @@ namespace Joomla\Component\Esquemarico\Administrator\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Component\Esquemarico\Administrator\Exception\PluginNotFoundException;
 
 \defined('_JEXEC') or die;
 
@@ -28,7 +29,7 @@ final class Apps
         $plugin = PluginHelper::getPlugin('esquemarico', $name);
 
         if (!$plugin) {
-            throw new \RuntimeException(Text::sprintf('COM_ESQUEMARICO_PLUGIN_NOT_FOUND', $name));
+            throw new PluginNotFoundException(Text::sprintf('COM_ESQUEMARICO_PLUGIN_NOT_FOUND', $name));
         }
 
         return Factory::getApplication()->bootPlugin($plugin->name, $plugin->type);

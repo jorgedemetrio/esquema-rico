@@ -149,42 +149,17 @@ final class EsquemaRicoHelper
      */
     public static function getCrumbs(string $homeText, bool $addHome = true): array|false
     {
-        $app     = Factory::getApplication();
-        $pathway = $app->getPathway();
-        $items   = $pathway->getPathway();
-        $menu    = $app->getMenu();
-        $lang    = $app->getLanguage();
-        $count   = \count($items);
+        $app   = Factory::getApplication();
+        $items = $app->getPathway()->getPathway();
 
-        if (!$count) {
+        if (!$items) {
             return false;
         }
 
-        $crumbs = [];
-
-        for ($i = 0; $i < $count; $i++) {
-            if ($items[$i]->link === null || !$items[$i]->name) {
-                continue;
-            }
-
-            $name = stripslashes(htmlspecialchars(strip_tags((string) $items[$i]->name), ENT_COMPAT, 'UTF-8'));
-            $name = (string) preg_replace('#\[icon\].*?\[/icon\]#', '', $name);
-
-            $crumbs[$i] = (object) [
-                'name' => trim($name),
-                'link' => self::route((string) $items[$i]->link),
-            ];
-        }
+        $crumbs = self::pathwayCrumbs($items);
 
         if ($addHome) {
-            $home = Multilanguage::isEnabled() ? $menu->getDefault($lang->getTag()) : $menu->getDefault();
-
-            if ($home !== null) {
-                array_unshift($crumbs, (object) [
-                    'name' => htmlspecialchars($homeText),
-                    'link' => self::route('index.php?Itemid=' . $home->id),
-                ]);
-            }
+            $crumbs = self::prependHome($crumbs, $homeText, $app);
         }
 
         // Corrige a URL ausente do último item (página atual).
@@ -197,10 +172,60 @@ final class EsquemaRicoHelper
         }
 
         // Converte URLs relativas em absolutas.
-        foreach ($crumbs as &$crumb) {
+        foreach ($crumbs as $crumb) {
             if (\is_string($crumb->link) && $crumb->link !== '') {
                 $crumb->link = self::absUrl($crumb->link);
             }
+        }
+
+        return $crumbs;
+    }
+
+    /**
+     * Constrói os crumbs a partir dos itens do pathway (ignora itens sem link/nome).
+     *
+     * @param  array<int, \stdClass>  $items
+     *
+     * @return array<int, \stdClass>
+     */
+    private static function pathwayCrumbs(array $items): array
+    {
+        $crumbs = [];
+
+        foreach ($items as $item) {
+            if ($item->link === null || !$item->name) {
+                continue;
+            }
+
+            $name = stripslashes(htmlspecialchars(strip_tags((string) $item->name), ENT_COMPAT, 'UTF-8'));
+            $name = (string) preg_replace('#\[icon\].*?\[/icon\]#', '', $name);
+
+            $crumbs[] = (object) [
+                'name' => trim($name),
+                'link' => self::route((string) $item->link),
+            ];
+        }
+
+        return $crumbs;
+    }
+
+    /**
+     * Prepende o item "início" à lista de crumbs, quando existe menu padrão.
+     *
+     * @param  array<int, \stdClass>  $crumbs
+     *
+     * @return array<int, \stdClass>
+     */
+    private static function prependHome(array $crumbs, string $homeText, object $app): array
+    {
+        $menu = $app->getMenu();
+        $home = Multilanguage::isEnabled() ? $menu->getDefault($app->getLanguage()->getTag()) : $menu->getDefault();
+
+        if ($home !== null) {
+            array_unshift($crumbs, (object) [
+                'name' => htmlspecialchars($homeText),
+                'link' => self::route('index.php?Itemid=' . $home->id),
+            ]);
         }
 
         return $crumbs;
