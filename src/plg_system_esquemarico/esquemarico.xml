@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade">
+    <name>PLG_SYSTEM_ESQUEMARICO</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-06</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>PLG_SYSTEM_ESQUEMARICO_DESC</description>
+
+    <namespace path="src">Joomla\Plugin\System\Esquemarico</namespace>
+
+    <files>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>language</folder>
+    </files>
+
+    <languages folder="language">
+        <language tag="pt-BR">pt-BR/plg_system_esquemarico.ini</language>
+        <language tag="pt-BR">pt-BR/plg_system_esquemarico.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_system_esquemarico.ini</language>
+        <language tag="en-GB">en-GB/plg_system_esquemarico.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params" addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+            <fieldset name="basic">
+                <field name="btn_config" type="note"
+                    label="COM_ESQUEMARICO"
+                    description="PLG_SYSTEM_ESQUEMARICO_OPEN_CONFIG"
+                />
+                <field name="wait_page_render" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_SYSTEM_ESQUEMARICO_WAIT_RENDER"
+                    description="PLG_SYSTEM_ESQUEMARICO_WAIT_RENDER_DESC"
+                    default="0">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="minifyjson" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_SYSTEM_ESQUEMARICO_MINIFY"
+                    default="0">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="debug" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_SYSTEM_ESQUEMARICO_DEBUG"
+                    description="PLG_SYSTEM_ESQUEMARICO_DEBUG_DESC"
+                    default="0">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

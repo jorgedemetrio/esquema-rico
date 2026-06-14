@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Evento (Event + Place/VirtualLocation/Offer). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="event">
+            <field name="headline" type="map" label="Nome do evento" default="gsd.item.headline" />
+            <field name="description" type="map" label="Descrição" default="gsd.item.description" />
+            <field name="image" type="mapimage" label="Imagem" default="gsd.item.image" />
+            <field name="url" type="map" label="URL" default="url" />
+
+            <field name="startDate" type="mapdate" label="Data de início" default="_disabled_" />
+            <field name="endDate" type="mapdate" label="Data de término" default="_disabled_" />
+            <field name="eventAttendanceMode" type="list" label="Modo de participação" default="https://schema.org/OfflineEventAttendanceMode">
+                <option value="https://schema.org/OfflineEventAttendanceMode">Presencial</option>
+                <option value="https://schema.org/OnlineEventAttendanceMode">Online</option>
+                <option value="https://schema.org/MixedEventAttendanceMode">Híbrido</option>
+            </field>
+
+            <field name="price" type="map" label="Preço do ingresso" default="_disabled_" />
+            <field name="offerCurrency" type="list" label="Moeda" default="BRL">
+                <option value="BRL">BRL</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </field>
+            <field name="offerAvailability" type="list" label="Disponibilidade" default="https://schema.org/InStock">
+                <option value="https://schema.org/InStock">Disponível</option>
+                <option value="https://schema.org/SoldOut">Esgotado</option>
+                <option value="https://schema.org/PreOrder">Pré-venda</option>
+            </field>
+
+            <field name="locationName" type="map" label="Nome do local" default="_disabled_" />
+            <field name="streetAddress" type="map" label="Endereço" default="_disabled_" />
+            <field name="addressLocality" type="map" label="Cidade" default="_disabled_" />
+            <field name="addressRegion" type="map" label="Estado/Região" default="_disabled_" />
+            <field name="postalCode" type="map" label="CEP" default="_disabled_" />
+            <field name="addressCountry" type="map" label="País" default="_disabled_" />
+            <field name="online_url" type="map" label="URL (evento online)" default="_disabled_" />
+
+            <field name="performerName" type="map" label="Nome do artista/palestrante" default="_disabled_" />
+            <field name="organizerName" type="map" label="Nome do organizador" default="_disabled_" />
+        </fields>
+    </fieldset>
+</form>

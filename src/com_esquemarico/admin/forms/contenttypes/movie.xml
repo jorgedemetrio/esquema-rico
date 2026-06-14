@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Filme (Movie). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="movie">
+            <field name="headline" type="map" label="Título" default="gsd.item.headline" />
+            <field name="description" type="map" label="Sinopse" default="gsd.item.description" />
+            <field name="image" type="mapimage" label="Pôster" default="gsd.item.image" />
+            <field name="url" type="map" label="URL" default="url" />
+            <field name="datePublished" type="mapdate" label="Data de lançamento" default="gsd.item.publish_up" />
+            <field name="duration" type="text" label="Duração (ISO 8601)" hint="PT2H10M" />
+            <field name="trailerUrl" type="map" label="URL do trailer" default="_disabled_" />
+
+            <field name="genre" type="subform" multiple="true" label="Gêneros"
+                layout="joomla.form.field.subform.repeatable-table">
+                <form><field name="name" type="text" label="Gênero" /></form>
+            </field>
+            <field name="directors" type="subform" multiple="true" label="Diretores"
+                layout="joomla.form.field.subform.repeatable-table">
+                <form><field name="name" type="text" label="Diretor" /></form>
+            </field>
+            <field name="actors" type="subform" multiple="true" label="Elenco"
+                layout="joomla.form.field.subform.repeatable-table">
+                <form><field name="name" type="text" label="Ator/Atriz" /></form>
+            </field>
+
+            <field name="rating_value" type="map" label="Valor da avaliação" default="gsd.item.ratingValue" />
+            <field name="review_count" type="map" label="Número de avaliações" default="gsd.item.reviewCount" />
+        </fields>
+    </fieldset>
+</form>

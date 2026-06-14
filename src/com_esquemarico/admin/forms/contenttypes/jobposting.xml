@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Vaga de emprego (JobPosting). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="jobposting">
+            <field name="headline" type="map" label="Título da vaga" default="gsd.item.headline" />
+            <field name="description" type="map" label="Descrição" default="gsd.item.description" />
+            <field name="datePublished" type="mapdate" label="Data de publicação" default="gsd.item.publish_up" />
+            <field name="valid_through" type="mapdate" label="Válida até" default="_disabled_" />
+
+            <field name="employmenttype" type="list" label="Tipo de contrato" default="FULL_TIME">
+                <option value="FULL_TIME">Tempo integral</option>
+                <option value="PART_TIME">Meio período</option>
+                <option value="CONTRACTOR">PJ / Contrato</option>
+                <option value="TEMPORARY">Temporário</option>
+                <option value="INTERN">Estágio</option>
+            </field>
+            <field name="industry" type="text" label="Setor" />
+            <field name="educationRequirements" type="text" label="Escolaridade exigida" />
+
+            <field name="hiring_organization_name" type="map" label="Empresa contratante" default="gsd.sitename" />
+            <field name="hiring_organization_url" type="map" label="URL da empresa" default="_disabled_" />
+            <field name="hiring_organization_logo" type="mapimage" label="Logo da empresa" default="gsd.sitelogo" />
+
+            <field name="streetAddress" type="map" label="Endereço" default="_disabled_" />
+            <field name="addressLocality" type="map" label="Cidade" default="_disabled_" />
+            <field name="addressRegion" type="map" label="Estado/Região" default="_disabled_" />
+            <field name="addressCountry" type="map" label="País" default="_disabled_" />
+
+            <field name="salary" type="map" label="Salário" default="_disabled_" />
+            <field name="currency" type="list" label="Moeda" default="BRL">
+                <option value="BRL">BRL</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </field>
+            <field name="salary_unit" type="list" label="Periodicidade do salário" default="MONTH">
+                <option value="HOUR">Por hora</option>
+                <option value="DAY">Por dia</option>
+                <option value="WEEK">Por semana</option>
+                <option value="MONTH">Por mês</option>
+                <option value="YEAR">Por ano</option>
+            </field>
+        </fields>
+    </fieldset>
+</form>

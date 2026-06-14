@@ -1,0 +1,40 @@
+name: Deploy FTPS
+# Em uma tag v* : valida, empacota (build/build.sh) e publica o pacote
+# pkg_esquemarico via FTPS, atualizando o XML do servidor de atualização do
+# Joomla (foco em Joomla 6). Banco MySQL 5, PHP 8.3.
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FTP_URL: ${{ secrets.FTP_URL }}
+      FTP_USER: ${{ secrets.FTP_USUARIO }}
+      FTP_PASSWORD: ${{ secrets.FTP_SENHA }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: phpstan, phpcs, phpmd
+
+      - name: Gate de validação (bloqueia o deploy em FAIL)
+        run: bash .claude/skills/validacao-pre-producao/validar.sh
+
+      - name: Instalar lftp e zip
+        run: sudo apt-get update && sudo apt-get install -y lftp zip
+
+      - name: Extrair versão da tag
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> "$GITHUB_ENV"
+
+      - name: Tornar o deploy executável
+        run: chmod +x .github/scripts/deploy.sh
+
+      - name: Empacotar e publicar (pkg_esquemarico)
+        run: bash .github/scripts/deploy.sh "$VERSION"

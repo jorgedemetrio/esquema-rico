@@ -1,0 +1,34 @@
+name: Validação pré-master
+# Gate de pré-publicação: roda o validar.sh ANTES de entregar na master
+# (PR direcionado à master e push na master). Qualquer FAIL bloqueia:
+#   php -l, API legada J3 / CMSObject, i18n usada-mas-inexistente, idiomas de
+#   manifesto ausentes, SQL MySQL 5 (ALTER de coluna, sintaxe MariaDB, índice
+#   VARCHAR > 191, datetime '0000-00-00'), estrutura provider/Extension.
+# WARN/INFO são heurística e não bloqueiam. Banco MySQL 5, PHP 8.3.
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - master
+
+jobs:
+  validar:
+    name: validar.sh (Joomla 6)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: phpstan, phpcs, phpmd
+
+      - name: Gate de validação (sai != 0 em FAIL)
+        run: bash .claude/skills/validacao-pre-producao/validar.sh

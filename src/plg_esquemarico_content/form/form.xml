@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Edição rápida: aba "Esquema Rico" injetada no editor de artigos do Joomla,
+    com acesso de um clique ao gerenciamento/criação de itens de marcação.
+    O campo "fastedit" é fornecido pelo componente com_esquemarico.
+-->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fields name="attribs">
+        <fieldset name="esquemarico" label="COM_ESQUEMARICO">
+            <field name="esr_fastedit" type="fastedit" />
+        </fieldset>
+    </fields>
+</form>

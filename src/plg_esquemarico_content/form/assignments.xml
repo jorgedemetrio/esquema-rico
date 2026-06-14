@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Condições de publicação para a integração de conteúdo nativo.
+    Carregado dentro do formulário do item de marcação (com_esquemarico.item).
+
+    Cada condição vive sob params > assignments > <alias da condição>, com:
+      - assignment_state : 0 desativada, 1 ativa
+      - operator         : includes | not_includes
+      - selection        : valores escolhidos
+      - params           : opções específicas da condição
+-->
+<form>
+    <fields name="params">
+        <fields name="assignments">
+            <fieldset name="menu" label="ESR_ASSIGNMENT_MENU">
+                <fields name="menu">
+                    <field name="assignment_state" type="radio" layout="joomla.form.field.radio.switcher"
+                        label="ESR_ASSIGNMENT_MENU"
+                        default="0">
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                    </field>
+                    <field name="operator" type="list"
+                        label="ESR_ASSIGNMENT_OPERATOR"
+                        default="includes"
+                        showon="assignment_state:1">
+                        <option value="includes">ESR_ASSIGNMENT_INCLUDES</option>
+                        <option value="not_includes">ESR_ASSIGNMENT_NOT_INCLUDES</option>
+                    </field>
+                    <field name="selection" type="menuitem" multiple="true"
+                        label="ESR_ASSIGNMENT_MENU_SELECT"
+                        showon="assignment_state:1"
+                    />
+                    <fields name="params">
+                        <field name="include_children" type="radio" layout="joomla.form.field.radio.switcher"
+                            label="ESR_ASSIGNMENT_INCLUDE_CHILDREN"
+                            default="0"
+                            showon="assignment_state:1">
+                            <option value="0">JNO</option>
+                            <option value="1">JYES</option>
+                        </field>
+                    </fields>
+                </fields>
+            </fieldset>
+
+            <fieldset name="idioma" label="ESR_ASSIGNMENT_LANGUAGE">
+                <fields name="idioma">
+                    <field name="assignment_state" type="radio" layout="joomla.form.field.radio.switcher"
+                        label="ESR_ASSIGNMENT_LANGUAGE"
+                        default="0">
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                    </field>
+                    <field name="operator" type="list"
+                        label="ESR_ASSIGNMENT_OPERATOR"
+                        default="includes"
+                        showon="assignment_state:1">
+                        <option value="includes">ESR_ASSIGNMENT_INCLUDES</option>
+                        <option value="not_includes">ESR_ASSIGNMENT_NOT_INCLUDES</option>
+                    </field>
+                    <field name="selection" type="contentlanguage" multiple="true"
+                        label="ESR_ASSIGNMENT_LANGUAGE_SELECT"
+                        showon="assignment_state:1"
+                    />
+                </fields>
+            </fieldset>
+
+            <fieldset name="dispositivo" label="ESR_ASSIGNMENT_DEVICE">
+                <fields name="dispositivo">
+                    <field name="assignment_state" type="radio" layout="joomla.form.field.radio.switcher"
+                        label="ESR_ASSIGNMENT_DEVICE" default="0">
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                    </field>
+                    <field name="operator" type="list" label="ESR_ASSIGNMENT_OPERATOR"
+                        default="includes" showon="assignment_state:1">
+                        <option value="includes">ESR_ASSIGNMENT_INCLUDES</option>
+                        <option value="not_includes">ESR_ASSIGNMENT_NOT_INCLUDES</option>
+                    </field>
+                    <field name="selection" type="list" multiple="true"
+                        label="ESR_ASSIGNMENT_DEVICE_SELECT" showon="assignment_state:1">
+                        <option value="desktop">ESR_DEVICE_DESKTOP</option>
+                        <option value="tablet">ESR_DEVICE_TABLET</option>
+                        <option value="mobile">ESR_DEVICE_MOBILE</option>
+                    </field>
+                </fields>
+            </fieldset>
+
+            <fieldset name="grupousuario" label="ESR_ASSIGNMENT_USERGROUP">
+                <fields name="grupousuario">
+                    <field name="assignment_state" type="radio" layout="joomla.form.field.radio.switcher"
+                        label="ESR_ASSIGNMENT_USERGROUP" default="0">
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                    </field>
+                    <field name="operator" type="list" label="ESR_ASSIGNMENT_OPERATOR"
+                        default="includes" showon="assignment_state:1">
+                        <option value="includes">ESR_ASSIGNMENT_INCLUDES</option>
+                        <option value="not_includes">ESR_ASSIGNMENT_NOT_INCLUDES</option>
+                    </field>
+                    <field name="selection" type="usergrouplist" multiple="true"
+                        label="ESR_ASSIGNMENT_USERGROUP_SELECT" showon="assignment_state:1" />
+                </fields>
+            </fieldset>
+        </fields>
+    </fields>
+</form>

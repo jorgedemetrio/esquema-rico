@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Serviço (Service). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="service">
+            <field name="headline" type="map" label="Nome do serviço" default="gsd.item.headline" />
+            <field name="description" type="map" label="Descrição" default="gsd.item.description" />
+            <field name="image" type="mapimage" label="Imagem" default="gsd.item.image" />
+            <field name="url" type="map" label="URL" default="url" />
+
+            <field name="provider_type" type="list" label="Tipo do prestador" default="Organization">
+                <option value="Organization">Organização</option>
+                <option value="Person">Pessoa</option>
+                <option value="LocalBusiness">Negócio local</option>
+            </field>
+            <field name="provider_name" type="map" label="Nome do prestador" default="gsd.sitename" />
+            <field name="provider_image" type="mapimage" label="Imagem do prestador" default="gsd.sitelogo" />
+            <field name="phone" type="map" label="Telefone" default="_disabled_" />
+
+            <field name="streetAddress" type="map" label="Endereço" default="_disabled_" />
+            <field name="addressLocality" type="map" label="Cidade" default="_disabled_" />
+            <field name="addressRegion" type="map" label="Estado/Região" default="_disabled_" />
+            <field name="addressCountry" type="map" label="País" default="_disabled_" />
+
+            <field name="offerPrice" type="map" label="Preço" default="_disabled_" />
+            <field name="currency" type="list" label="Moeda" default="BRL">
+                <option value="BRL">BRL</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </field>
+        </fields>
+    </fieldset>
+</form>

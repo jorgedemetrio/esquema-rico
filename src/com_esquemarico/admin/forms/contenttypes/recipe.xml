@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Receita (Recipe). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="recipe">
+            <field name="headline" type="map" label="Nome da receita" default="gsd.item.headline" />
+            <field name="description" type="map" label="Descrição" default="gsd.item.description" />
+            <field name="image" type="mapimage" label="Imagem" default="gsd.item.image" />
+
+            <field name="prepTime" type="text" label="Tempo de preparo (ISO 8601)" hint="PT20M" />
+            <field name="cookTime" type="text" label="Tempo de cozimento (ISO 8601)" hint="PT30M" />
+            <field name="totalTime" type="text" label="Tempo total (ISO 8601)" hint="PT50M" />
+
+            <field name="cuisine" type="text" label="Tipo de cozinha" hint="Brasileira, Italiana..." />
+            <field name="category" type="text" label="Categoria" hint="Sobremesa, Prato principal..." />
+            <field name="yield" type="text" label="Rendimento" hint="4 porções" />
+            <field name="keywords" type="map" label="Palavras-chave" default="_disabled_" />
+
+            <field name="ingredient" type="textarea" rows="6" custom_value_multiple="true"
+                label="Ingredientes" description="Um ingrediente por linha." />
+            <field name="instructions" type="textarea" rows="8" label="Modo de preparo" />
+
+            <field name="calories" type="text" label="Calorias" hint="270 calorias" />
+            <field name="video" type="map" label="URL do vídeo" default="_disabled_" />
+
+            <field name="author" type="mapuser" label="Autor" default="user.name" />
+            <field name="rating_value" type="map" label="Valor da avaliação" default="gsd.item.ratingValue" />
+            <field name="review_count" type="map" label="Número de avaliações" default="gsd.item.reviewCount" />
+        </fields>
+    </fieldset>
+</form>

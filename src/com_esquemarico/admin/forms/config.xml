@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Configurações globais (esquemas globais). Persistidas na linha "config" de
+    #__esquemarico_config e lidas pelo plugin de sistema na renderização.
+-->
+<form>
+    <fieldset name="sitename" label="ESR_CFG_SITENAME">
+        <field name="sitename_enabled" type="radio" layout="joomla.form.field.radio.switcher"
+            label="JENABLED" default="1">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="sitename_name" type="text" class="input-xxlarge"
+            label="ESR_CFG_SITENAME_NAME" description="ESR_CFG_SITENAME_NAME_DESC"
+            showon="sitename_enabled:1" />
+        <field name="sitename_name_alt" type="text" class="input-xxlarge"
+            label="ESR_CFG_SITENAME_ALT" showon="sitename_enabled:1" />
+        <field name="sitename_url" type="url" class="input-xxlarge"
+            label="ESR_CFG_SITENAME_URL" showon="sitename_enabled:1" />
+    </fieldset>
+
+    <fieldset name="breadcrumbs" label="ESR_CFG_BREADCRUMBS">
+        <field name="breadcrumbs_enabled" type="radio" layout="joomla.form.field.radio.switcher"
+            label="JENABLED" default="1">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="include_home" type="radio" layout="joomla.form.field.radio.switcher"
+            label="ESR_CFG_BREADCRUMBS_INCLUDE_HOME" default="1" showon="breadcrumbs_enabled:1">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="breadcrumbs_home" type="text" class="input-xxlarge"
+            label="ESR_CFG_BREADCRUMBS_HOME" showon="breadcrumbs_enabled:1" />
+    </fieldset>
+
+    <fieldset name="sitelinks" label="ESR_CFG_SITELINKS">
+        <field name="sitelinks_enabled" type="list" label="ESR_CFG_SITELINKS_METHOD" default="0">
+            <option value="0">JDISABLED</option>
+            <option value="1">ESR_CFG_SITELINKS_SEARCH</option>
+            <option value="2">ESR_CFG_SITELINKS_FINDER</option>
+            <option value="3">ESR_CFG_SITELINKS_CUSTOM</option>
+        </field>
+        <field name="sitelinks_search_custom_url" type="url" class="input-xxlarge"
+            label="ESR_CFG_SITELINKS_CUSTOM_URL"
+            hint="https://www.seusite.com/busca?q={search_term}"
+            showon="sitelinks_enabled:3" />
+    </fieldset>
+
+    <fieldset name="logo" label="ESR_CFG_LOGO">
+        <field name="logo_file" type="media" label="ESR_CFG_LOGO_FILE" description="ESR_CFG_LOGO_FILE_DESC" />
+    </fieldset>
+
+    <fieldset name="social" label="ESR_CFG_SOCIAL">
+        <field name="socialprofiles_type" type="list" label="ESR_CFG_SOCIAL_TYPE" default="Organization">
+            <option value="Organization">ESR_ORGANIZATION</option>
+            <option value="Person">ESR_PERSON</option>
+        </field>
+        <field name="socialprofiles_facebook" type="url" class="input-xxlarge" label="Facebook" hint="https://www.facebook.com/..." />
+        <field name="socialprofiles_twitter" type="url" class="input-xxlarge" label="X / Twitter" hint="https://x.com/..." />
+        <field name="socialprofiles_instagram" type="url" class="input-xxlarge" label="Instagram" hint="https://www.instagram.com/..." />
+        <field name="socialprofiles_youtube" type="url" class="input-xxlarge" label="YouTube" hint="https://www.youtube.com/..." />
+        <field name="socialprofiles_linkedin" type="url" class="input-xxlarge" label="LinkedIn" hint="https://www.linkedin.com/..." />
+        <field name="socialprofiles_pinterest" type="url" class="input-xxlarge" label="Pinterest" hint="https://www.pinterest.com/..." />
+        <field name="socialprofiles_other" type="textarea" class="input-xxlarge" rows="4"
+            label="ESR_CFG_SOCIAL_OTHER" description="ESR_CFG_SOCIAL_OTHER_DESC" />
+    </fieldset>
+
+    <fieldset name="business" label="ESR_CFG_BUSINESS">
+        <field name="businesslisting_enabled" type="radio" layout="joomla.form.field.radio.switcher"
+            label="JENABLED" default="0">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="businesslisting_type" type="text" label="ESR_CFG_BUSINESS_TYPE"
+            hint="LocalBusiness, Restaurant, Store..." default="LocalBusiness" showon="businesslisting_enabled:1" />
+        <field name="businesslisting_street_address" type="text" class="input-xxlarge"
+            label="ESR_CFG_BUSINESS_STREET" showon="businesslisting_enabled:1" />
+        <field name="businesslisting_address_locality" type="text"
+            label="ESR_CFG_BUSINESS_LOCALITY" showon="businesslisting_enabled:1" />
+        <field name="businesslisting_address_region" type="text"
+            label="ESR_CFG_BUSINESS_REGION" showon="businesslisting_enabled:1" />
+        <field name="businesslisting_postal_code" type="text"
+            label="ESR_CFG_BUSINESS_POSTAL" showon="businesslisting_enabled:1" />
+        <field name="businesslisting_address_country" type="text"
+            label="ESR_CFG_BUSINESS_COUNTRY" hint="BR" showon="businesslisting_enabled:1" />
+        <field name="businesslisting_telephone" type="tel"
+            label="ESR_CFG_BUSINESS_PHONE" showon="businesslisting_enabled:1" />
+        <field name="businesslisting_price_range" type="text"
+            label="ESR_CFG_BUSINESS_PRICE_RANGE" hint="$$" showon="businesslisting_enabled:1" />
+        <field name="businesslisting_latlng" type="text"
+            label="ESR_CFG_BUSINESS_LATLNG" hint="-23.5505,-46.6333" showon="businesslisting_enabled:1" />
+    </fieldset>
+
+    <fieldset name="sitemap" label="ESR_CFG_SITEMAP">
+        <field name="sitemap_note" type="note"
+            label="ESR_CFG_SITEMAP"
+            description="ESR_CFG_SITEMAP_DESC" />
+        <field name="sitemap_priority_window" type="number"
+            label="ESR_CFG_SITEMAP_WINDOW" description="ESR_CFG_SITEMAP_WINDOW_DESC"
+            default="365" min="1" step="1" />
+        <field name="sitemap_priority_max" type="number"
+            label="ESR_CFG_SITEMAP_MAX" description="ESR_CFG_SITEMAP_MAX_DESC"
+            default="1.0" min="0.1" max="1.0" step="0.1" />
+        <field name="sitemap_priority_min" type="number"
+            label="ESR_CFG_SITEMAP_MIN" description="ESR_CFG_SITEMAP_MIN_DESC"
+            default="0.1" min="0.0" max="1.0" step="0.1" />
+        <field name="sitemap_urls" type="note"
+            label="ESR_CFG_SITEMAP_URLS"
+            description="ESR_CFG_SITEMAP_URLS_DESC" />
+    </fieldset>
+
+    <fieldset name="advanced" label="ESR_CFG_ADVANCED">
+        <field name="removemicrodata" type="subform"
+            label="ESR_CFG_REMOVE_MICRODATA" description="ESR_CFG_REMOVE_MICRODATA_DESC"
+            multiple="true" layout="joomla.form.field.subform.repeatable-table"
+            default='{"0":{"name":"BreadcrumbList","enabled":"1"}}'>
+            <form>
+                <field name="enabled" type="radio" layout="joomla.form.field.radio.switcher" label="JENABLED" default="1">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="name" type="text" label="ESR_CFG_REMOVE_SCHEMA_NAME" hint="BreadcrumbList, Article, Product..." />
+            </form>
+        </field>
+        <field name="customcode" type="textarea" class="input-xxlarge" rows="10" filter="raw"
+            label="ESR_CFG_CUSTOM_CODE" description="ESR_CFG_CUSTOM_CODE_DESC"
+            hint="&lt;script type='application/ld+json'&gt;...&lt;/script&gt;" />
+    </fieldset>
+</form>

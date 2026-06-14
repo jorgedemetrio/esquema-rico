@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Produto (Product + Offer/AggregateOffer). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="product">
+            <field name="headline" type="map" label="Nome do produto" default="gsd.item.headline" />
+            <field name="description" type="map" label="Descrição" default="gsd.item.description" />
+            <field name="image" type="mapimage" label="Imagem" default="gsd.item.image" />
+            <field name="url" type="map" label="URL" default="url" />
+
+            <field name="sku" type="map" label="SKU" default="_disabled_" />
+            <field name="mpn" type="map" label="MPN" default="_disabled_" />
+            <field name="gtin" type="map" label="GTIN" default="_disabled_" />
+            <field name="brand" type="map" label="Marca" default="_disabled_" />
+
+            <field name="weight" type="map" label="Peso" default="_disabled_" />
+            <field name="weightUnit" type="text" label="Unidade de peso" default="KGM" hint="KGM, GRM, LBR..." />
+
+            <field name="offerPrice" type="map" label="Preço" default="_disabled_" />
+            <field name="currency" type="list" label="Moeda" default="BRL">
+                <option value="BRL">BRL</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+            </field>
+            <field name="offerAvailability" type="list" label="Disponibilidade" default="https://schema.org/InStock">
+                <option value="https://schema.org/InStock">Em estoque</option>
+                <option value="https://schema.org/OutOfStock">Esgotado</option>
+                <option value="https://schema.org/PreOrder">Pré-venda</option>
+                <option value="https://schema.org/Discontinued">Descontinuado</option>
+            </field>
+            <field name="offerItemCondition" type="list" label="Condição" default="https://schema.org/NewCondition">
+                <option value="https://schema.org/NewCondition">Novo</option>
+                <option value="https://schema.org/UsedCondition">Usado</option>
+                <option value="https://schema.org/RefurbishedCondition">Recondicionado</option>
+            </field>
+            <field name="priceValidUntil" type="mapdate" label="Preço válido até" default="_disabled_" />
+
+            <field name="rating_value" type="map" label="Valor da avaliação" default="gsd.item.ratingValue" />
+            <field name="review_count" type="map" label="Número de avaliações" default="gsd.item.reviewCount" />
+        </fields>
+    </fieldset>
+</form>

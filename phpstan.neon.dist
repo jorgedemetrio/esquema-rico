@@ -1,0 +1,26 @@
+# Configuração base do PHPStan para o Esquema Rico.
+#
+# Como usar:
+#   composer require --dev phpstan/phpstan
+#   vendor/bin/phpstan analyse -c phpstan.neon.dist
+#
+# IMPORTANTE: como esta é uma extensão Joomla, as classes do CMS (Joomla\CMS\*,
+# Joomla\Registry\*, etc.) não estão neste repositório. Para uma análise sem
+# falsos positivos de "classe desconhecida", aponte scanDirectories para uma
+# instalação do Joomla 6 (pasta libraries/) OU instale os pacotes:
+#   composer require --dev joomla/registry joomla/database joomla/event
+#
+parameters:
+    level: 5
+    phpVersion: 80300
+    paths:
+        - src
+    excludePaths:
+        - src/*/language/*
+    # Descomente e ajuste para a sua instalação do Joomla:
+    # scanDirectories:
+    #     - /caminho/para/joomla/libraries
+    ignoreErrors:
+        # Classes do CMS resolvidas apenas em runtime no Joomla.
+        - '#Class Joomla\\CMS\\[a-zA-Z0-9_\\]+ not found#'
+        - '#Call to method [a-zA-Z0-9_]+\(\) on an unknown class Joomla\\CMS\\#'

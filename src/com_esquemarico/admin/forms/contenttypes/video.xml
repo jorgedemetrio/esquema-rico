@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Vídeo (VideoObject). Requer URL de conteúdo OU de incorporação. -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="video">
+            <field name="name" type="map" label="Título do vídeo" default="gsd.item.headline" />
+            <field name="description" type="map" label="Descrição" default="gsd.item.description" />
+            <field name="thumbnailUrl" type="mapimage" label="Miniatura" default="gsd.item.image" />
+            <field name="uploadDate" type="mapdate" label="Data de publicação" default="gsd.item.publish_up" />
+            <field name="contentUrl" type="map" label="URL do arquivo de vídeo" default="_disabled_" />
+            <field name="embedUrl" type="map" label="URL de incorporação (embed)" default="_disabled_" />
+            <field name="transcript" type="textarea" rows="4" label="Transcrição" />
+        </fields>
+    </fieldset>
+</form>

@@ -1,0 +1,62 @@
+name: Build
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - release
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  static:
+    name: Lint + Análise estática (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: phpstan, phpmd, phpcs
+
+      - name: Lint de sintaxe (php -l)
+        run: bash build/lint.sh
+
+      # PHPStan/PHPMD/PHPCS são ADVISORY: como o framework Joomla não é carregado
+      # na CI, há ruído inerente. As regras J6 determinísticas vivem no gate
+      # (validacao-pre-master.yml). continue-on-error mantém visibilidade.
+      - name: PHPStan (advisory)
+        continue-on-error: true
+        run: phpstan analyse -c phpstan.neon.dist --no-progress src
+
+      - name: PHPMD (advisory)
+        continue-on-error: true
+        run: phpmd src text ./phpmd.xml
+
+      - name: PHPCS PSR-12 (advisory)
+        continue-on-error: true
+        run: phpcs --standard=phpcs.xml.dist -q src
+
+  tests:
+    name: Testes do motor JSON-LD (PHPUnit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer
+
+      - name: Instalar dependências de teste
+        working-directory: tests
+        run: composer install --no-interaction --no-progress
+
+      - name: Rodar PHPUnit
+        working-directory: tests
+        run: vendor/bin/phpunit

@@ -1,0 +1,13 @@
+/**
+ * Esquema Rico - estilos do backend
+ * Copyright (C) 2026 Esquema Rico. GPL v3 ou posterior.
+ */
+
+.esr-painel .lead {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.esr-painel .btn-lg {
+    min-width: 16rem;
+}

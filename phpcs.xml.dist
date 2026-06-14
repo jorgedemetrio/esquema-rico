@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+    Padrão de código (PSR-12) do Esquema Rico.
+
+    Uso:
+        composer require --dev squizlabs/php_codesniffer
+        vendor/bin/phpcs            # verificar
+        vendor/bin/phpcbf           # corrigir automaticamente o possível
+-->
+<ruleset name="Esquema Rico">
+    <description>PSR-12 para o código do Esquema Rico.</description>
+
+    <file>src</file>
+    <file>tests</file>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg value="sp"/>
+
+    <rule ref="PSR12"/>
+
+    <!-- Não analisar idiomas, formulários e SQL. -->
+    <exclude-pattern>*/language/*</exclude-pattern>
+    <exclude-pattern>*/forms/*</exclude-pattern>
+    <exclude-pattern>*/form/*</exclude-pattern>
+    <exclude-pattern>*/sql/*</exclude-pattern>
+    <exclude-pattern>*/tests/vendor/*</exclude-pattern>
+
+    <!--
+        Convenções do Joomla que divergem do PSR-12 e são intencionais:
+        - guarda `\defined('_JEXEC') or die;` no topo dos arquivos;
+        - nome de classe com underscore (Custom_Code) para casar com o alias do tipo.
+    -->
+    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+        <exclude-pattern>*/Schema/Tipos/Custom_Code.php</exclude-pattern>
+    </rule>
+</ruleset>

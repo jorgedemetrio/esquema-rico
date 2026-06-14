@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Como fazer (HowTo + HowToStep/HowToTool/HowToSupply). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="howto">
+            <field name="name" type="map" label="Título" default="gsd.item.headline" />
+            <field name="image" type="mapimage" label="Imagem" default="gsd.item.image" />
+            <field name="totalTime" type="text" label="Tempo total (ISO 8601)" hint="PT1H30M" />
+            <field name="estimatedCost" type="text" label="Custo estimado" hint="50" />
+            <field name="estimatedCostCurrency" type="list" label="Moeda do custo" default="BRL">
+                <option value="BRL">BRL</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </field>
+
+            <field name="supply" type="textarea" rows="4" custom_value_multiple="true"
+                label="Materiais" description="Um material por linha." />
+            <field name="tool" type="textarea" rows="4" custom_value_multiple="true"
+                label="Ferramentas" description="Uma ferramenta por linha." />
+
+            <field name="step" type="subform" multiple="true"
+                label="Passos"
+                description="Os passos do tutorial, na ordem."
+                layout="joomla.form.field.subform.repeatable-table">
+                <form>
+                    <field name="name" type="text" label="Título do passo" size="40" />
+                    <field name="text" type="textarea" label="Descrição do passo" rows="2" />
+                    <field name="url" type="url" label="URL (âncora opcional)" />
+                </form>
+            </field>
+        </fields>
+    </fieldset>
+</form>

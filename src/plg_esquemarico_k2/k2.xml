@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="esquemarico" method="upgrade">
+    <name>PLG_ESQUEMARICO_K2</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-06</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>PLG_ESQUEMARICO_K2_DESC</description>
+
+    <namespace path="src">Joomla\Plugin\Esquemarico\K2</namespace>
+
+    <files>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>form</folder>
+        <folder>language</folder>
+    </files>
+
+    <languages folder="language">
+        <language tag="pt-BR">pt-BR/plg_esquemarico_k2.ini</language>
+        <language tag="pt-BR">pt-BR/plg_esquemarico_k2.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_esquemarico_k2.ini</language>
+        <language tag="en-GB">en-GB/plg_esquemarico_k2.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="remove_default_schema" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_ESQUEMARICO_K2_REMOVE_DEFAULT_SCHEMA" default="1">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

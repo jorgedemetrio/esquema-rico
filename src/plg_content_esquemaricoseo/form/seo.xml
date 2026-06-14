@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Subgrupo "Análise SEO" injetado na aba Opções do editor de artigos.
+    A palavra-chave de foco é gravada em #__content.attribs (grupo attribs).
+    O campo "seoanalysis" (do componente com_esquemarico) renderiza o painel.
+-->
+<form>
+    <fields name="attribs" addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+        <fieldset name="esquemaricoseo" label="ESR_SEO_TAB" description="ESR_SEO_TAB_DESC">
+            <field name="esr_focus_keyword" type="text"
+                label="ESR_SEO_FOCUS_KEYWORD"
+                description="ESR_SEO_FOCUS_KEYWORD_DESC"
+                class="input-xxlarge" />
+            <field name="esr_seo_analysis" type="seoanalysis" />
+        </fieldset>
+    </fields>
+</form>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: FAQ (FAQPage + Question/Answer). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="faq">
+            <field name="faqs" type="subform" multiple="true"
+                label="Perguntas e respostas"
+                description="Adicione cada par de pergunta e resposta."
+                layout="joomla.form.field.subform.repeatable-table">
+                <form>
+                    <field name="question" type="text" label="Pergunta" size="50" />
+                    <field name="answer" type="textarea" label="Resposta" rows="3" />
+                </form>
+            </field>
+        </fields>
+    </fieldset>
+</form>

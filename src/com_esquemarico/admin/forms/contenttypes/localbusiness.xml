@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Negócio local (LocalBusiness e subtipos). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="localbusiness">
+            <field name="type" type="businesstypes" label="Subtipo de negócio" default="LocalBusiness" />
+            <field name="name" type="map" label="Nome" default="gsd.item.headline" />
+            <field name="image" type="mapimage" label="Imagem" default="gsd.item.image" />
+            <field name="url" type="map" label="URL" default="url" />
+            <field name="telephone" type="map" label="Telefone" default="_disabled_" />
+            <field name="priceRange" type="text" label="Faixa de preço" hint="$$" />
+
+            <field name="streetAddress" type="map" label="Endereço" default="_disabled_" />
+            <field name="addressLocality" type="map" label="Cidade" default="_disabled_" />
+            <field name="addressRegion" type="map" label="Estado/Região" default="_disabled_" />
+            <field name="postalCode" type="map" label="CEP" default="_disabled_" />
+            <field name="addressCountry" type="map" label="País" default="_disabled_" />
+
+            <field name="servesCuisine" type="text" label="Tipo de cozinha (restaurantes)" />
+            <field name="menu" type="url" label="URL do cardápio (restaurantes)" />
+
+            <field name="openinghours" type="openinghours" label="Horário de funcionamento" />
+
+
+            <field name="rating_value" type="map" label="Valor da avaliação" default="gsd.item.ratingValue" />
+            <field name="review_count" type="map" label="Número de avaliações" default="gsd.item.reviewCount" />
+        </fields>
+    </fieldset>
+</form>

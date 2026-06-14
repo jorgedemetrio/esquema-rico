@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Pessoa (Person). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="person">
+            <field name="type" type="text" label="Subtipo" default="Person" />
+            <field name="headline" type="map" label="Nome" default="gsd.item.headline" />
+            <field name="description" type="map" label="Biografia" default="gsd.item.description" />
+            <field name="image" type="mapimage" label="Foto" default="gsd.item.image" />
+            <field name="url" type="map" label="URL do perfil" default="url" />
+
+            <field name="jobTitle" type="text" label="Cargo" />
+            <field name="worksFor" type="text" label="Trabalha em (organização)" />
+            <field name="email" type="map" label="E-mail" default="_disabled_" />
+            <field name="telephone" type="map" label="Telefone" default="_disabled_" />
+            <field name="birthDate" type="mapdate" label="Data de nascimento" default="_disabled_" />
+            <field name="gender" type="list" label="Gênero" default="">
+                <option value="">- Não informar -</option>
+                <option value="Female">Feminino</option>
+                <option value="Male">Masculino</option>
+            </field>
+
+            <field name="streetAddress" type="map" label="Endereço" default="_disabled_" />
+            <field name="addressLocality" type="map" label="Cidade" default="_disabled_" />
+            <field name="addressRegion" type="map" label="Estado/Região" default="_disabled_" />
+            <field name="addressCountry" type="map" label="País" default="_disabled_" />
+
+            <field name="sameAs" type="textarea" rows="4" custom_value_multiple="true"
+                label="Perfis (sameAs)" description="Uma URL por linha." />
+        </fields>
+    </fieldset>
+</form>

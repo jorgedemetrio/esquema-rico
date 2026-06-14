@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Tipo de conteúdo: Artigo (Article / NewsArticle / BlogPosting).
+    Define os campos mapeáveis exibidos no editor do item de marcação e seus
+    mapeamentos padrão. Os tipos map/mapimage/mapdate/mapuser são campos
+    personalizados do componente (seletor de origem + valor fixo/personalizado).
+-->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="article">
+            <field name="type" type="list"
+                label="ESR_ARTICLE_SCHEMA"
+                description="ESR_ARTICLE_SCHEMA_DESC"
+                default="Article"
+                required="true">
+                <option value="Article">Article</option>
+                <option value="NewsArticle">NewsArticle</option>
+                <option value="BlogPosting">BlogPosting</option>
+            </field>
+            <field name="headline" type="map"
+                label="ESR_OPT_TITLE"
+                description="ESR_ARTICLE_HEADLINE_DESC"
+                default="gsd.item.headline"
+            />
+            <field name="description" type="map"
+                label="ESR_ITEM_DESC"
+                description="ESR_ITEM_DESC_DESC"
+                default="gsd.item.description"
+            />
+            <field name="author" type="mapuser"
+                label="ESR_AUTHOR_NAME"
+                description="ESR_AUTHOR_DESC"
+                default="user.name"
+            />
+            <field name="authorUrl" type="map"
+                label="ESR_AUTHOR_URL"
+                description="ESR_AUTHOR_URL_DESC"
+                default="url"
+            />
+            <field name="image" type="mapimage"
+                label="ESR_IMAGE"
+                description="ESR_IMAGE_OPTION_DESC"
+                default="gsd.item.image"
+            />
+            <field name="publisher_name" type="mapuser"
+                label="ESR_PUBLISHER_NAME"
+                description="ESR_PUBLISHER_NAME_DESC"
+                default="gsd.sitename"
+            />
+            <field name="publisher_logo" type="mapimage"
+                label="ESR_PUBLISHER_LOGO"
+                description="ESR_PUBLISHER_LOGO_DESC"
+                default="gsd.sitelogo"
+            />
+            <field name="publish_up" type="mapdate"
+                label="ESR_DATE_PUBLISHED"
+                description="ESR_DATE_PUBLISHED_DESC"
+                default="gsd.item.publish_up"
+            />
+            <field name="modified" type="mapdate"
+                label="ESR_DATE_MODIFIED"
+                description="ESR_DATE_MODIFIED_DESC"
+                default="gsd.item.modified"
+            />
+        </fields>
+    </fieldset>
+</form>

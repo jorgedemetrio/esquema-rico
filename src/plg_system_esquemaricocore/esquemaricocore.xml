@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade">
+    <name>PLG_SYSTEM_ESQUEMARICOCORE</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-06</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>PLG_SYSTEM_ESQUEMARICOCORE_DESC</description>
+    <!--
+        O namespace declarado é o do PRÓPRIO plugin (pasta src/).
+        A biblioteca compartilhada Esquemarico\Core (pasta Core/) é registrada
+        em tempo de execução por autoload.php, para ficar disponível a todos os
+        artefatos da família, mesmo quando este plugin não está sendo executado.
+    -->
+    <namespace path="src">Joomla\Plugin\System\EsquemaricoCore</namespace>
+    <files>
+        <file>autoload.php</file>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>Core</folder>
+        <folder>language</folder>
+    </files>
+    <languages folder="language">
+        <language tag="pt-BR">pt-BR/plg_system_esquemaricocore.ini</language>
+        <language tag="pt-BR">pt-BR/plg_system_esquemaricocore.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_system_esquemaricocore.ini</language>
+        <language tag="en-GB">en-GB/plg_system_esquemaricocore.sys.ini</language>
+    </languages>
+</extension>

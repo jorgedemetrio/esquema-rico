@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Livro (Book + workExample). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="book">
+            <field name="headline" type="map" label="Título" default="gsd.item.headline" />
+            <field name="image" type="mapimage" label="Capa" default="gsd.item.image" />
+            <field name="url" type="map" label="URL" default="url" />
+            <field name="author" type="mapuser" label="Autor" default="user.name" />
+            <field name="inLanguage" type="text" label="Idioma" hint="pt-BR" />
+            <field name="bookFormat" type="list" label="Formato" default="https://schema.org/Paperback">
+                <option value="https://schema.org/Hardcover">Capa dura</option>
+                <option value="https://schema.org/Paperback">Brochura</option>
+                <option value="https://schema.org/EBook">E-book</option>
+                <option value="https://schema.org/AudiobookFormat">Audiolivro</option>
+            </field>
+            <field name="isbn" type="text" label="ISBN" />
+            <field name="edition" type="text" label="Edição" />
+            <field name="datePublished" type="mapdate" label="Data de publicação" default="gsd.item.publish_up" />
+            <field name="referenceURL" type="map" label="URL de referência (sameAs)" default="_disabled_" />
+        </fields>
+    </fieldset>
+</form>

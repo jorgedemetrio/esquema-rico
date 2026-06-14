@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="esquemarico" method="upgrade">
+    <name>PLG_ESQUEMARICO_CONTENT</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-06</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>PLG_ESQUEMARICO_CONTENT_DESC</description>
+
+    <namespace path="src">Joomla\Plugin\Esquemarico\Content</namespace>
+
+    <files>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>form</folder>
+        <folder>language</folder>
+    </files>
+
+    <languages folder="language">
+        <language tag="pt-BR">pt-BR/plg_esquemarico_content.ini</language>
+        <language tag="pt-BR">pt-BR/plg_esquemarico_content.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_esquemarico_content.ini</language>
+        <language tag="en-GB">en-GB/plg_esquemarico_content.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="remove_default_schema" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_ESQUEMARICO_CONTENT_REMOVE_DEFAULT_SCHEMA"
+                    description="PLG_ESQUEMARICO_CONTENT_REMOVE_DEFAULT_SCHEMA_DESC"
+                    default="1">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="load_custom_fields" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_ESQUEMARICO_CONTENT_LOAD_CUSTOM_FIELDS"
+                    description="PLG_ESQUEMARICO_CONTENT_LOAD_CUSTOM_FIELDS_DESC"
+                    default="1">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="fastedit" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_ESQUEMARICO_CONTENT_FASTEDIT"
+                    description="PLG_ESQUEMARICO_CONTENT_FASTEDIT_DESC"
+                    default="1">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="preparecontent" type="radio" layout="joomla.form.field.radio.switcher"
+                    label="PLG_ESQUEMARICO_CONTENT_PREPARECONTENT"
+                    description="PLG_ESQUEMARICO_CONTENT_PREPARECONTENT_DESC"
+                    default="0">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

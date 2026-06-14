@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Curso (Course + CourseInstance + Offer). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="course">
+            <field name="headline" type="map" label="Nome do curso" default="gsd.item.headline" />
+            <field name="description" type="map" label="Descrição" default="gsd.item.description" />
+            <field name="image" type="mapimage" label="Imagem" default="gsd.item.image" />
+            <field name="url" type="map" label="URL" default="url" />
+            <field name="course_code" type="text" label="Código do curso" />
+
+            <field name="course_mode" type="list" label="Modalidade" default="online">
+                <option value="online">Online</option>
+                <option value="onsite">Presencial</option>
+                <option value="blended">Híbrido</option>
+            </field>
+            <field name="startDate" type="mapdate" label="Data de início" default="_disabled_" />
+            <field name="endDate" type="mapdate" label="Data de término" default="_disabled_" />
+            <field name="place_name" type="text" label="Nome do local (presencial)" />
+            <field name="courseWorkload" type="text" label="Carga horária (ISO 8601)" hint="PT40H" />
+
+            <field name="streetAddress" type="map" label="Endereço" default="_disabled_" />
+            <field name="addressLocality" type="map" label="Cidade" default="_disabled_" />
+            <field name="addressRegion" type="map" label="Estado/Região" default="_disabled_" />
+            <field name="addressCountry" type="map" label="País" default="_disabled_" />
+
+            <field name="price" type="map" label="Preço" default="_disabled_" />
+            <field name="priceCurrency" type="list" label="Moeda" default="BRL">
+                <option value="BRL">BRL</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </field>
+            <field name="availability" type="text" label="Disponibilidade" hint="https://schema.org/InStock" />
+
+            <field name="rating_value" type="map" label="Valor da avaliação" default="_disabled_" />
+            <field name="review_count" type="map" label="Número de avaliações" default="_disabled_" />
+        </fields>
+    </fieldset>
+</form>

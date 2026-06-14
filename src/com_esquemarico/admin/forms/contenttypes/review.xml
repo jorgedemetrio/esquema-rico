@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Avaliação (Review + itemReviewed). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="review">
+            <field name="itemReviewedType" type="list" label="Tipo do item avaliado" default="Product">
+                <option value="Product">Produto</option>
+                <option value="LocalBusiness">Negócio local</option>
+                <option value="Movie">Filme</option>
+                <option value="Book">Livro</option>
+                <option value="Organization">Organização</option>
+            </field>
+            <field name="headline" type="map" label="Nome do item avaliado" default="gsd.item.headline" />
+            <field name="image" type="mapimage" label="Imagem" default="gsd.item.image" />
+            <field name="itemReviewedURL" type="map" label="URL do item avaliado" default="url" />
+            <field name="description" type="map" label="Texto da avaliação" default="gsd.item.description" />
+            <field name="language_code" type="text" label="Idioma" hint="pt-BR" />
+
+            <field name="author" type="mapuser" label="Autor da avaliação" default="user.name" />
+            <field name="datePublished" type="mapdate" label="Data" default="gsd.item.publish_up" />
+
+            <field name="rating_value" type="map" label="Nota" default="_disabled_" />
+            <field name="bestRating" type="text" label="Nota máxima" default="5" />
+            <field name="worstRating" type="text" label="Nota mínima" default="0" />
+        </fields>
+    </fieldset>
+</form>

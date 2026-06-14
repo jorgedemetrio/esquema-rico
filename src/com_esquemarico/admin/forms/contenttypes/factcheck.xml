@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Checagem de fatos (ClaimReview). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="factcheck">
+            <field name="headline" type="map" label="Alegação verificada" default="gsd.item.headline" />
+            <field name="factcheckURL" type="map" label="URL da checagem" default="url" />
+
+            <field name="claimAuthorType" type="list" label="Tipo do autor da alegação" default="Organization">
+                <option value="Organization">Organização</option>
+                <option value="Person">Pessoa</option>
+            </field>
+            <field name="claimAuthorName" type="text" label="Autor da alegação" />
+            <field name="claimURL" type="url" label="URL da alegação original" />
+            <field name="claimDatePublished" type="mapdate" label="Data da alegação" default="_disabled_" />
+
+            <field name="factcheckRating" type="text" label="Nota da verificação" hint="1 a 5" />
+            <field name="bestFactcheckRating" type="text" label="Nota máxima" default="5" />
+            <field name="worstFactcheckRating" type="text" label="Nota mínima" default="1" />
+            <field name="alternateName" type="text" label="Veredito (texto)" hint="Falso, Verdadeiro, Impreciso..." />
+        </fields>
+    </fieldset>
+</form>

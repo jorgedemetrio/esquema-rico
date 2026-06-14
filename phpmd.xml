@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="esquemarico"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>
+        Ruleset do Esquema Rico (Joomla 6). Importa cleancode + codesize + unusedcode,
+        EXCLUINDO regras que geram ruído inerente sobre uma extensão Joomla:
+
+          - StaticAccess  : o CMS expõe helpers estáticos idiomáticos e inevitáveis
+                            (Factory::getApplication(), Text::_, Route::_, HTMLHelper::_,
+                            PluginHelper::*, etc.). Reclamar de cada chamada é ruído.
+          - MissingImport : classes globais do PHP referenciadas com `\` (\stdClass,
+                            \JsonException, \DateTimeZone, \ReflectionClass) são uso
+                            idiomático e não precisam de `use`.
+
+        Observação: ao contrário de uma extensão Joomla 3, AQUI o código é namespaced e
+        usa `use Joomla\CMS\…` para as classes do CMS — isso é validado no gate
+        (validar.sh, seção "Convenções Joomla 6"), não pelo PHPMD.
+
+        Mantemos complexidade, métodos/variáveis não usados, else desnecessário, etc.
+    </description>
+
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="StaticAccess"/>
+        <exclude name="MissingImport"/>
+    </rule>
+    <rule ref="rulesets/codesize.xml"/>
+    <rule ref="rulesets/unusedcode.xml"/>
+</ruleset>

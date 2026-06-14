@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Código personalizado (JSON-LD bruto). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="custom_code">
+            <field name="custom_code" type="textarea" rows="14" filter="raw"
+                label="Código JSON-LD"
+                description="Cole aqui o bloco completo &lt;script type='application/ld+json'&gt;...&lt;/script&gt;. SmartTags como {gsd.item.headline} são substituídas."
+                hint="&lt;script type='application/ld+json'&gt;{ ... }&lt;/script&gt;" />
+        </fields>
+    </fieldset>
+</form>

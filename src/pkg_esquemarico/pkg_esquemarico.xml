@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" method="upgrade">
+    <name>Esquema Rico</name>
+    <packagename>esquemarico</packagename>
+    <author>Esquema Rico</author>
+    <creationDate>2026-06</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <url>https://github.com/jorgedemetrio/google-data-structure-for-joomla</url>
+    <description>PKG_ESQUEMARICO_XML_DESCRIPTION</description>
+
+    <scriptfile>script.php</scriptfile>
+
+    <!--
+        A ordem dos arquivos importa: a biblioteca compartilhada deve ser
+        instalada antes do componente e dos plugins que dela dependem.
+        Os ZIPs são produzidos pelo script de build (ver TODO, Fase 10).
+    -->
+    <files folder="packages">
+        <file type="plugin" id="esquemaricocore" group="system">plg_system_esquemaricocore.zip</file>
+        <file type="component" id="com_esquemarico">com_esquemarico.zip</file>
+        <file type="plugin" id="esquemarico" group="system">plg_system_esquemarico.zip</file>
+        <file type="plugin" id="content" group="esquemarico">plg_esquemarico_content.zip</file>
+        <file type="plugin" id="menus" group="esquemarico">plg_esquemarico_menus.zip</file>
+        <file type="plugin" id="k2" group="esquemarico">plg_esquemarico_k2.zip</file>
+        <file type="plugin" id="virtuemart" group="esquemarico">plg_esquemarico_virtuemart.zip</file>
+        <file type="plugin" id="jevents" group="esquemarico">plg_esquemarico_jevents.zip</file>
+        <file type="plugin" id="hikashop" group="esquemarico">plg_esquemarico_hikashop.zip</file>
+        <file type="plugin" id="dpcalendar" group="esquemarico">plg_esquemarico_dpcalendar.zip</file>
+        <file type="plugin" id="esquemaricokeywords" group="content">plg_content_esquemaricokeywords.zip</file>
+        <file type="plugin" id="esquemaricoseo" group="content">plg_content_esquemaricoseo.zip</file>
+    </files>
+
+    <languages folder="language">
+        <language tag="pt-BR">pt-BR/pkg_esquemarico.sys.ini</language>
+    </languages>
+</extension>

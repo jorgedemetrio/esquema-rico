@@ -1,0 +1,48 @@
+/**
+ * Esquema Rico - Painel de análise de SEO (estilo Yoast)
+ * Copyright (C) 2026 Esquema Rico. GPL v3 ou posterior.
+ */
+
+.esr-seo {
+    border: 1px solid var(--bs-border-color, #dee2e6);
+    border-radius: .5rem;
+    padding: 1rem;
+}
+
+.esr-seo-gauge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    border: .35rem solid #adb5bd;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.esr-seo-score { font-size: 2rem; font-weight: 700; }
+.esr-seo-max   { font-size: .8rem; color: #6c757d; }
+.esr-seo-rating { font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; margin-top: .25rem; }
+
+.esr-seo-good { border-color: #198754; }
+.esr-seo-ok   { border-color: #fd7e14; }
+.esr-seo-bad  { border-color: #dc3545; }
+
+.esr-seo-checks { margin: 0; }
+.esr-seo-check { display: flex; align-items: flex-start; gap: .5rem; padding: .2rem 0; }
+
+.esr-seo-dot {
+    flex: 0 0 auto;
+    width: .7rem;
+    height: .7rem;
+    border-radius: 50%;
+    margin-top: .35rem;
+    background: #adb5bd;
+}
+.esr-seo-check.esr-seo-good .esr-seo-dot { background: #198754; }
+.esr-seo-check.esr-seo-ok   .esr-seo-dot { background: #fd7e14; }
+.esr-seo-check.esr-seo-bad  .esr-seo-dot { background: #dc3545; }
+
+.esr-seo-live { font-size: .8rem; color: #6c757d; margin-left: .25rem; }

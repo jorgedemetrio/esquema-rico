@@ -1,0 +1,12 @@
+{
+    "name": "esquemarico/tests",
+    "description": "Testes do motor JSON-LD do Esquema Rico",
+    "license": "GPL-3.0-or-later",
+    "require-dev": {
+        "phpunit/phpunit": "^10.5",
+        "joomla/registry": "^3.0"
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" method="upgrade">
+    <name>com_esquemarico</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-06</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>COM_ESQUEMARICO_XML_DESCRIPTION</description>
+
+    <namespace path="src">Joomla\Component\Esquemarico</namespace>
+
+    <scriptfile>script.php</scriptfile>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <!-- Frontend: gerador de sitemaps XML (conteúdo, categorias, menu, tags). -->
+    <files folder="site">
+        <folder>src</folder>
+        <folder>language</folder>
+    </files>
+
+    <languages folder="site/language">
+        <language tag="pt-BR">pt-BR/com_esquemarico.ini</language>
+        <language tag="en-GB">en-GB/com_esquemarico.ini</language>
+    </languages>
+
+    <media folder="media" destination="com_esquemarico">
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
+
+    <administration>
+        <menu img="class:esquemarico" link="option=com_esquemarico">COM_ESQUEMARICO</menu>
+        <submenu>
+            <menu link="option=com_esquemarico&amp;view=painel">COM_ESQUEMARICO_SUBMENU_PAINEL</menu>
+            <menu link="option=com_esquemarico&amp;view=items" view="items">COM_ESQUEMARICO_SUBMENU_ITEMS</menu>
+            <menu link="option=com_esquemarico&amp;view=config" view="config">COM_ESQUEMARICO_SUBMENU_CONFIG</menu>
+        </submenu>
+
+        <files folder="admin">
+            <folder>services</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+            <folder>forms</folder>
+            <folder>sql</folder>
+            <folder>language</folder>
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+        </files>
+
+        <languages folder="admin/language">
+            <language tag="pt-BR">pt-BR/com_esquemarico.ini</language>
+            <language tag="pt-BR">pt-BR/com_esquemarico.sys.ini</language>
+            <language tag="en-GB">en-GB/com_esquemarico.ini</language>
+            <language tag="en-GB">en-GB/com_esquemarico.sys.ini</language>
+        </languages>
+    </administration>
+</extension>

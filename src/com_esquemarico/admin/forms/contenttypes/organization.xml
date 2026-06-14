@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tipo de conteúdo: Organização (Organization e subtipos). -->
+<form addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+    <fieldset name="contenttype">
+        <fields name="organization">
+            <field name="type" type="organizationtypes" label="Subtipo" default="Organization" />
+            <field name="name" type="map" label="Nome" default="gsd.item.headline" />
+            <field name="alternateName" type="text" label="Nome alternativo" />
+            <field name="legalName" type="text" label="Razão social" />
+            <field name="description" type="map" label="Descrição" default="gsd.item.description" />
+            <field name="logo" type="mapimage" label="Logo" default="gsd.sitelogo" />
+            <field name="url" type="map" label="URL" default="url" />
+            <field name="email" type="map" label="E-mail" default="_disabled_" />
+            <field name="telephone" type="map" label="Telefone" default="_disabled_" />
+            <field name="foundingDate" type="mapdate" label="Data de fundação" default="_disabled_" />
+
+            <field name="streetAddress" type="map" label="Endereço" default="_disabled_" />
+            <field name="addressLocality" type="map" label="Cidade" default="_disabled_" />
+            <field name="addressRegion" type="map" label="Estado/Região" default="_disabled_" />
+            <field name="postalCode" type="map" label="CEP" default="_disabled_" />
+            <field name="addressCountry" type="map" label="País" default="_disabled_" />
+
+            <field name="vatID" type="text" label="CNPJ / VAT" />
+            <field name="sameAs" type="textarea" rows="4" custom_value_multiple="true"
+                label="Perfis (sameAs)" description="Uma URL por linha." />
+
+            <field name="rating_value" type="map" label="Valor da avaliação" default="_disabled_" />
+            <field name="review_count" type="map" label="Número de avaliações" default="_disabled_" />
+        </fields>
+    </fieldset>
+</form>

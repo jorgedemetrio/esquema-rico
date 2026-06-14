@@ -1,0 +1,4 @@
+--
+-- Esquema Rico — baseline do mecanismo de schema updates (versão 1.0.0)
+-- Sem alterações: marca o ponto de partida das migrações incrementais.
+--

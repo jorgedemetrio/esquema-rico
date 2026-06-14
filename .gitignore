@@ -1,0 +1,43 @@
+# Artefatos de build
+/dist/
+
+# Dependências
+vendor/
+/node_modules/
+
+# Testes
+.phpunit.result.cache
+.phpunit.cache/
+/tests/vendor/
+/tests/composer.lock
+/tests/.phpunit.result.cache
+
+# Artefatos temporários de deploy (gerados por .github/scripts/deploy.sh)
+/pkg_esquemarico-*.zip
+/atualizacao.xml
+/atualizacao_remota.xml
+/nova_entrada.xml
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+/.idea/
+/.vscode/
+*.sublime-*
+
+# Claude Code — configurações e estado locais (a skill do gate continua versionada)
+.claude/settings.local.json
+.claude/settings.json
+.claude/.credentials.json
+.claude/projects/
+.claude/todos/
+.claude/shell-snapshots/
+.claude/statsig/
+
+# Ferramentas de análise estática (caches)
+.php-cs-fixer.cache
+.phpstan.cache/
+/phpstan-baseline.neon
