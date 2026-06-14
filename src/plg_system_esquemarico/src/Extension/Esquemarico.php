@@ -70,6 +70,7 @@ final class Esquemarico extends CMSPlugin implements SubscriberInterface
             Factory::getApplication()->getDocument()->addCustomTag($markup);
         }
 
+        $this->metaCanonicalERobos();
         $this->controleSnippetRobos();
         $this->metaOpenGraph();
     }
@@ -300,6 +301,61 @@ final class Esquemarico extends CMSPlugin implements SubscriberInterface
         $robots = $robots === '' ? $value : $robots . ', ' . $value;
 
         $doc->setMetaData('robots', $robots);
+    }
+
+    /* ===================================================================
+     *  Canonical e controle de indexação (robots)
+     * =================================================================== */
+
+    /**
+     * Adiciona o canonical autorreferente (quando ausente e habilitado) e
+     * aplica "noindex, follow" em páginas finas/duplicadas típicas do Joomla
+     * (resultados de busca e, opcionalmente, páginas paginadas).
+     */
+    private function metaCanonicalERobos(): void
+    {
+        $app   = Factory::getApplication();
+        $doc   = $app->getDocument();
+        $input = $app->getInput();
+
+        // Canonical autorreferente (opt-in; recomendado com URLs SEF).
+        if ($this->globais->get('canonical_enabled', 0) && !$this->temCanonical($doc)) {
+            $doc->addHeadLink(Uri::current(), 'canonical');
+        }
+
+        $noindex = false;
+
+        if ($this->globais->get('noindex_search', 1)
+            && \in_array($input->getCmd('option'), ['com_search', 'com_finder'], true)) {
+            $noindex = true;
+        }
+
+        if (!$noindex && $this->globais->get('noindex_paginated', 0) && (int) $input->get('limitstart', 0) > 0) {
+            $noindex = true;
+        }
+
+        if ($noindex) {
+            $robots = (string) $doc->getMetaData('robots');
+
+            if (!Functions::strposArr(['noindex'], $robots)) {
+                $doc->setMetaData('robots', 'noindex, follow');
+            }
+        }
+    }
+
+    /**
+     * Indica se a página já possui um <link rel="canonical"> (do componente
+     * ou do template) — para não duplicá-lo.
+     */
+    private function temCanonical(object $doc): bool
+    {
+        foreach ((array) ($doc->getHeadData()['links'] ?? []) as $data) {
+            if (\is_array($data) && ($data['relation'] ?? '') === 'canonical') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /* ===================================================================

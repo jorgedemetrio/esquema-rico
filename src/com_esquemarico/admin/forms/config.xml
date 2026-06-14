@@ -87,6 +87,26 @@
             hint="@seuperfil" showon="og_enabled:1" />
     </fieldset>
 
+    <fieldset name="indexing" label="ESR_CFG_INDEXING">
+        <field name="indexing_note" type="note"
+            label="ESR_CFG_INDEXING" description="ESR_CFG_INDEXING_DESC" />
+        <field name="canonical_enabled" type="radio" layout="joomla.form.field.radio.switcher"
+            label="ESR_CFG_INDEXING_CANONICAL" description="ESR_CFG_INDEXING_CANONICAL_DESC" default="0">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="noindex_search" type="radio" layout="joomla.form.field.radio.switcher"
+            label="ESR_CFG_INDEXING_NOINDEX_SEARCH" description="ESR_CFG_INDEXING_NOINDEX_SEARCH_DESC" default="1">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="noindex_paginated" type="radio" layout="joomla.form.field.radio.switcher"
+            label="ESR_CFG_INDEXING_NOINDEX_PAGINATED" description="ESR_CFG_INDEXING_NOINDEX_PAGINATED_DESC" default="0">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+    </fieldset>
+
     <fieldset name="business" label="ESR_CFG_BUSINESS">
         <field name="businesslisting_enabled" type="radio" layout="joomla.form.field.radio.switcher"
             label="JENABLED" default="0">
