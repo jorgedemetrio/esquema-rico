@@ -11,7 +11,7 @@
     <namespace path="src">Joomla\Plugin\Esquemarico\Menus</namespace>
 
     <files>
-        <folder>services</folder>
+        <folder plugin="menus">services</folder>
         <folder>src</folder>
         <folder>form</folder>
         <folder>language</folder>

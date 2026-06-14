@@ -11,7 +11,7 @@
     <namespace path="src">Joomla\Plugin\Esquemarico\Jevents</namespace>
 
     <files>
-        <folder>services</folder>
+        <folder plugin="jevents">services</folder>
         <folder>src</folder>
         <folder>form</folder>
         <folder>language</folder>

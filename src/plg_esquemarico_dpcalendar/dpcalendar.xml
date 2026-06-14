@@ -11,7 +11,7 @@
     <namespace path="src">Joomla\Plugin\Esquemarico\Dpcalendar</namespace>
 
     <files>
-        <folder>services</folder>
+        <folder plugin="dpcalendar">services</folder>
         <folder>src</folder>
         <folder>form</folder>
         <folder>language</folder>

@@ -11,7 +11,7 @@
     <namespace path="src">Joomla\Plugin\Esquemarico\Hikashop</namespace>
 
     <files>
-        <folder>services</folder>
+        <folder plugin="hikashop">services</folder>
         <folder>src</folder>
         <folder>form</folder>
         <folder>language</folder>

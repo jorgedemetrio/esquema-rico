@@ -16,7 +16,7 @@
     <namespace path="src">Joomla\Plugin\System\EsquemaricoCore</namespace>
     <files>
         <file>autoload.php</file>
-        <folder>services</folder>
+        <folder plugin="esquemaricocore">services</folder>
         <folder>src</folder>
         <folder>Core</folder>
         <folder>language</folder>
