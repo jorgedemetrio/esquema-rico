@@ -6,6 +6,10 @@
     <testsuites>
         <testsuite name="Esquema Rico - Motor JSON-LD">
             <directory>.</directory>
+            <!-- Sem isto, o PHPUnit varre tests/vendor e tenta carregar os
+                 próprios *Test.php dele (PHPUnit\Util\Test, etc.), gerando
+                 test runner warnings que fazem o processo sair com código 1. -->
+            <exclude>./vendor</exclude>
         </testsuite>
     </testsuites>
 </phpunit>
