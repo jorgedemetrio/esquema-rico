@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade">
+    <name>PLG_SYSTEM_ESQUEMARICOCHAT</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-07</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>PLG_SYSTEM_ESQUEMARICOCHAT_DESC</description>
+
+    <namespace path="src">Joomla\Plugin\System\EsquemaricoChat</namespace>
+
+    <files>
+        <folder plugin="esquemaricochat">services</folder>
+        <folder>src</folder>
+        <folder>sql</folder>
+        <folder>language</folder>
+    </files>
+
+    <languages folder="language">
+        <language tag="pt-BR">pt-BR/plg_system_esquemaricochat.ini</language>
+        <language tag="pt-BR">pt-BR/plg_system_esquemaricochat.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_system_esquemaricochat.ini</language>
+        <language tag="en-GB">en-GB/plg_system_esquemaricochat.sys.ini</language>
+    </languages>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="provider" type="list"
+                    label="PLG_SYSTEM_ESQUEMARICOCHAT_PROVIDER"
+                    description="PLG_SYSTEM_ESQUEMARICOCHAT_PROVIDER_DESC"
+                    default="gemini">
+                    <option value="gemini">Google Gemini</option>
+                    <option value="chatgpt">ChatGPT (OpenAI)</option>
+                    <option value="claude">Claude (Anthropic)</option>
+                    <option value="deepseek">DeepSeek</option>
+                </field>
+
+                <field name="token" type="password"
+                    label="PLG_SYSTEM_ESQUEMARICOCHAT_TOKEN"
+                    description="PLG_SYSTEM_ESQUEMARICOCHAT_TOKEN_DESC"
+                    required="true"
+                />
+
+                <field name="assistant_name" type="text"
+                    label="PLG_SYSTEM_ESQUEMARICOCHAT_ASSISTANT_NAME"
+                    description="PLG_SYSTEM_ESQUEMARICOCHAT_ASSISTANT_NAME_DESC"
+                    default="Assistente de IA"
+                    required="true"
+                />
+
+                <field name="assistant_image" type="media"
+                    label="PLG_SYSTEM_ESQUEMARICOCHAT_ASSISTANT_IMAGE"
+                    description="PLG_SYSTEM_ESQUEMARICOCHAT_ASSISTANT_IMAGE_DESC"
+                    preview="true"
+                />
+
+                <field name="context_source" type="list"
+                    label="PLG_SYSTEM_ESQUEMARICOCHAT_CONTEXT_SOURCE"
+                    description="PLG_SYSTEM_ESQUEMARICOCHAT_CONTEXT_SOURCE_DESC"
+                    default="text">
+                    <option value="text">PLG_SYSTEM_ESQUEMARICOCHAT_CONTEXT_SOURCE_TEXT</option>
+                    <option value="file">PLG_SYSTEM_ESQUEMARICOCHAT_CONTEXT_SOURCE_FILE</option>
+                </field>
+
+                <field name="context_text" type="textarea"
+                    label="PLG_SYSTEM_ESQUEMARICOCHAT_CONTEXT_TEXT"
+                    description="PLG_SYSTEM_ESQUEMARICOCHAT_CONTEXT_TEXT_DESC"
+                    rows="6"
+                    cols="40"
+                    showon="context_source:text"
+                />
+
+                <field name="context_file_path" type="text"
+                    label="PLG_SYSTEM_ESQUEMARICOCHAT_CONTEXT_FILE_PATH"
+                    description="PLG_SYSTEM_ESQUEMARICOCHAT_CONTEXT_FILE_PATH_DESC"
+                    default="images/context.txt"
+                    showon="context_source:file"
+                />
+            </fieldset>
+        </fields>
+    </config>
+</extension>
