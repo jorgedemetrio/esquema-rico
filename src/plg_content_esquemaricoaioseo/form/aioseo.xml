@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Subgrupo "AIOSEO" injetado na aba Opções do editor de artigos.
+    O campo "aioseoanalysis" (do componente com_esquemarico) renderiza o painel.
+-->
+<form>
+    <fields name="attribs" addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+        <fieldset name="esquemaricoaioseo" label="ESR_AIOSEO_TAB" description="ESR_AIOSEO_TAB_DESC">
+            <field name="esr_aioseo_analysis" type="aioseoanalysis" />
+        </fieldset>
+    </fields>
+</form>

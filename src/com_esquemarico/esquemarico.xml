@@ -31,6 +31,7 @@
     <!-- Frontend: gerador de sitemaps XML (conteúdo, categorias, menu, tags). -->
     <files folder="site">
         <folder>src</folder>
+        <folder>tmpl</folder>
         <folder>language</folder>
     </files>
 

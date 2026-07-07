@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="5.0" client="site" method="upgrade">
+    <name>mod_esquemarico_adsense</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-07</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>MOD_ESQUEMARICO_ADSENSE_XML_DESCRIPTION</description>
+
+    <namespace path="src">Joomla\Module\EsquemaricoAdsense</namespace>
+
+    <files>
+        <filename module="mod_esquemarico_adsense">mod_esquemarico_adsense.php</filename>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+        <folder>language</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="cx" type="text"
+                       label="MOD_ESQUEMARICO_ADSENSE_CX_LABEL"
+                       description="MOD_ESQUEMARICO_ADSENSE_CX_DESC"
+                       required="true"
+                       class="input-xxlarge" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

@@ -48,6 +48,10 @@ declare -A EXT=(
   ["plg_esquemarico_dpcalendar"]="plg_esquemarico_dpcalendar"
   ["plg_content_esquemaricokeywords"]="plg_content_esquemaricokeywords"
   ["plg_content_esquemaricoseo"]="plg_content_esquemaricoseo"
+  ["plg_content_esquemaricoaioseo"]="plg_content_esquemaricoaioseo"
+  ["plg_content_esquemaricoia"]="plg_content_esquemaricoia"
+  ["plg_content_esquemaricoredirect"]="plg_content_esquemaricoredirect"
+  ["mod_esquemarico_adsense"]="mod_esquemarico_adsense"
 )
 
 for dir in "${!EXT[@]}"; do
