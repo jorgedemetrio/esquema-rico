@@ -31,7 +31,6 @@ return new class () implements InstallerScriptInterface {
     private array $autoEnable = [
         ['esquemaricocore', 'system'],
         ['esquemarico', 'system'],
-        ['esquemaricochat', 'system'],
         ['content', 'esquemarico'],
         ['menus', 'esquemarico'],
         ['k2', 'esquemarico'],

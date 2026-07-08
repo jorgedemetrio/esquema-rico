@@ -42,26 +42,35 @@ final class EsquemaricoChat extends CMSPlugin implements SubscriberInterface
      */
     public function aposRenderizar(): void
     {
+        $app = Factory::getApplication();
+
         // Só atua no frontend (site).
-        if ($this->app->isClient('administrator')) {
+        if ($app->isClient('administrator')) {
             return;
         }
 
         // Não injeta em feeds rss/atom ou requisições AJAX diretas.
-        $format = $this->app->getInput()->get('format', 'html');
+        $format = $app->getInput()->get('format', 'html');
         if ($format !== 'html') {
+            return;
+        }
+
+        // Não injeta se o token de API ou o nome do assistente não estiverem configurados.
+        $token         = trim($this->params->get('token', ''));
+        $assistantName = trim($this->params->get('assistant_name', ''));
+        if ($token === '' || $assistantName === '') {
             return;
         }
 
         $markup = $this->montarChatMarkup();
 
-        $buffer = $this->app->getBody();
+        $buffer = $app->getBody();
         if (str_contains($buffer, '</body>')) {
             $buffer = str_replace('</body>', $markup . '</body>', $buffer);
         } else {
             $buffer .= $markup;
         }
-        $this->app->setBody($buffer);
+        $app->setBody($buffer);
     }
 
     /**
@@ -71,8 +80,10 @@ final class EsquemaricoChat extends CMSPlugin implements SubscriberInterface
      */
     public function onAjaxEsquemaricochat(): array
     {
+        $app = Factory::getApplication();
+
         // 1. Validar token CSRF.
-        if (!$this->app->checkToken('post')) {
+        if (!$app->checkToken('post')) {
             return [
                 'success' => false,
                 'error'   => Text::_('PLG_SYSTEM_ESQUEMARICOCHAT_ERROR_CSRF')
@@ -80,7 +91,7 @@ final class EsquemaricoChat extends CMSPlugin implements SubscriberInterface
         }
 
         // 2. Obter mensagem do usuário.
-        $userMsg = trim($this->app->getInput()->getString('message', ''));
+        $userMsg = trim($app->getInput()->getString('message', ''));
         if ($userMsg === '') {
             return [
                 'success' => false,
@@ -100,7 +111,7 @@ final class EsquemaricoChat extends CMSPlugin implements SubscriberInterface
         }
 
         // 4. Carregar nome e descrição do site.
-        $siteConfig = $this->app->getConfig();
+        $siteConfig = $app->getConfig();
         $siteName   = $siteConfig->get('sitename', '');
         $siteDesc   = $siteConfig->get('MetaDesc', '');
 
@@ -125,7 +136,7 @@ final class EsquemaricoChat extends CMSPlugin implements SubscriberInterface
         }
 
         // 6. Verificar identidade do usuário.
-        $user       = $this->app->getIdentity();
+        $user       = $app->getIdentity();
         $isLoggedIn = $user && !$user->guest;
         $userName   = $isLoggedIn ? $user->name : '';
 
@@ -183,7 +194,7 @@ final class EsquemaricoChat extends CMSPlugin implements SubscriberInterface
         // 10. Persistir histórico no banco de dados se o usuário estiver logado.
         if ($isLoggedIn) {
             $db  = Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
-            $now = (new \DateTime('now', new \DateTimeZone($this->app->get('offset', 'UTC'))))->format('Y-m-d H:i:s');
+            $now = (new \DateTime('now', new \DateTimeZone($app->get('offset', 'UTC'))))->format('Y-m-d H:i:s');
 
             try {
                 // Mensagem do Usuário
@@ -249,7 +260,8 @@ final class EsquemaricoChat extends CMSPlugin implements SubscriberInterface
         }
 
         // Usuário logado
-        $user       = $this->app->getIdentity();
+        $app        = Factory::getApplication();
+        $user       = $app->getIdentity();
         $isLoggedIn = $user && !$user->guest;
         $userName   = $isLoggedIn ? $user->name : '';
 
