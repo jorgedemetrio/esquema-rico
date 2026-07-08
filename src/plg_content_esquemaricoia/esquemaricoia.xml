@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" method="upgrade">
+    <name>plg_content_esquemaricoia</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-07</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>PLG_CONTENT_ESQUEMARICOIA_XML_DESCRIPTION</description>
+
+    <namespace path="src">Joomla\Plugin\Content\EsquemaricoIa</namespace>
+
+    <files>
+        <filename plugin="esquemaricoia">esquemaricoia.php</filename>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>form</folder>
+        <folder>language</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="ia_provider" type="list" default="openai"
+                       label="PLG_CONTENT_ESQUEMARICOIA_PROVIDER"
+                       description="PLG_CONTENT_ESQUEMARICOIA_PROVIDER_DESC">
+                    <option value="openai">OpenAI (ChatGPT)</option>
+                    <option value="gemini">Google (Gemini)</option>
+                    <option value="claude">Anthropic (Claude)</option>
+                </field>
+                <field name="openai_api_key" type="password"
+                       label="PLG_CONTENT_ESQUEMARICOIA_OPENAI_KEY"
+                       description="PLG_CONTENT_ESQUEMARICOIA_OPENAI_KEY_DESC"
+                       class="input-xxlarge" />
+                <field name="gemini_api_key" type="password"
+                       label="PLG_CONTENT_ESQUEMARICOIA_GEMINI_KEY"
+                       description="PLG_CONTENT_ESQUEMARICOIA_GEMINI_KEY_DESC"
+                       class="input-xxlarge" />
+                <field name="claude_api_key" type="password"
+                       label="PLG_CONTENT_ESQUEMARICOIA_CLAUDE_KEY"
+                       description="PLG_CONTENT_ESQUEMARICOIA_CLAUDE_KEY_DESC"
+                       class="input-xxlarge" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

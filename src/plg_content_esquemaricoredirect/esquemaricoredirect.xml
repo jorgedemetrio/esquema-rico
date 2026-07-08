@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" method="upgrade">
+    <name>plg_content_esquemaricoredirect</name>
+    <author>Esquema Rico</author>
+    <creationDate>2026-07</creationDate>
+    <copyright>Copyright (C) 2026 Esquema Rico. Todos os direitos reservados.</copyright>
+    <license>GNU General Public License versão 3 ou posterior; ver LICENSE</license>
+    <version>1.0.0</version>
+    <description>PLG_CONTENT_ESQUEMARICOREDIRECT_XML_DESCRIPTION</description>
+
+    <namespace path="src">Joomla\Plugin\Content\Esquemaricoredirect</namespace>
+
+    <files>
+        <filename plugin="esquemaricoredirect">esquemaricoredirect.php</filename>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>language</folder>
+    </files>
+</extension>

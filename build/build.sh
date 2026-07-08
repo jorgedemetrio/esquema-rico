@@ -39,6 +39,7 @@ declare -A EXT=(
   ["plg_system_esquemaricocore"]="plg_system_esquemaricocore"
   ["com_esquemarico"]="com_esquemarico"
   ["plg_system_esquemarico"]="plg_system_esquemarico"
+  ["plg_system_esquemaricochat"]="plg_system_esquemaricochat"
   ["plg_esquemarico_content"]="plg_esquemarico_content"
   ["plg_esquemarico_menus"]="plg_esquemarico_menus"
   ["plg_esquemarico_k2"]="plg_esquemarico_k2"
@@ -48,6 +49,10 @@ declare -A EXT=(
   ["plg_esquemarico_dpcalendar"]="plg_esquemarico_dpcalendar"
   ["plg_content_esquemaricokeywords"]="plg_content_esquemaricokeywords"
   ["plg_content_esquemaricoseo"]="plg_content_esquemaricoseo"
+  ["plg_content_esquemaricoaioseo"]="plg_content_esquemaricoaioseo"
+  ["plg_content_esquemaricoia"]="plg_content_esquemaricoia"
+  ["plg_content_esquemaricoredirect"]="plg_content_esquemaricoredirect"
+  ["mod_esquemarico_adsense"]="mod_esquemarico_adsense"
 )
 
 for dir in "${!EXT[@]}"; do

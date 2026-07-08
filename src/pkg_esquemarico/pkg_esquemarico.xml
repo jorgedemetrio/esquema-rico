@@ -21,6 +21,7 @@
         <file type="plugin" id="esquemaricocore" group="system">plg_system_esquemaricocore.zip</file>
         <file type="component" id="com_esquemarico">com_esquemarico.zip</file>
         <file type="plugin" id="esquemarico" group="system">plg_system_esquemarico.zip</file>
+        <file type="plugin" id="esquemaricochat" group="system">plg_system_esquemaricochat.zip</file>
         <file type="plugin" id="content" group="esquemarico">plg_esquemarico_content.zip</file>
         <file type="plugin" id="menus" group="esquemarico">plg_esquemarico_menus.zip</file>
         <file type="plugin" id="k2" group="esquemarico">plg_esquemarico_k2.zip</file>
@@ -30,6 +31,10 @@
         <file type="plugin" id="dpcalendar" group="esquemarico">plg_esquemarico_dpcalendar.zip</file>
         <file type="plugin" id="esquemaricokeywords" group="content">plg_content_esquemaricokeywords.zip</file>
         <file type="plugin" id="esquemaricoseo" group="content">plg_content_esquemaricoseo.zip</file>
+        <file type="plugin" id="esquemaricoaioseo" group="content">plg_content_esquemaricoaioseo.zip</file>
+        <file type="plugin" id="esquemaricoia" group="content">plg_content_esquemaricoia.zip</file>
+        <file type="plugin" id="esquemaricoredirect" group="content">plg_content_esquemaricoredirect.zip</file>
+        <file type="module" id="mod_esquemarico_adsense" client="site">mod_esquemarico_adsense.zip</file>
     </files>
 
     <languages folder="language">

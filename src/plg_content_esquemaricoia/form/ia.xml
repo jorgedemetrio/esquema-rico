@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Subgrupo "IA" injetado na aba Opções do editor de artigos.
+    O campo "iagenerator" (do componente com_esquemarico) renderiza o botão e modais.
+-->
+<form>
+    <fields name="attribs" addfieldprefix="Joomla\Component\Esquemarico\Administrator\Field">
+        <fieldset name="esquemaricoia" label="ESR_IA_TAB" description="ESR_IA_TAB_DESC">
+            <field name="esr_ia_generator" type="iagenerator" />
+        </fieldset>
+    </fields>
+</form>

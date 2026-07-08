@@ -29,6 +29,12 @@ class DisplayController extends BaseController
 {
     public function display($cachable = false, $urlparams = [])
     {
+        $viewName = $this->input->getCmd('view', 'sitemap');
+
+        if ($viewName === 'search') {
+            return parent::display($cachable, $urlparams);
+        }
+
         $type = $this->input->getCmd('type', '');
 
         /** @var SitemapModel $model */
