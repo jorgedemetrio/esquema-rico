@@ -55,6 +55,13 @@ final class EsquemaricoChat extends CMSPlugin implements SubscriberInterface
             return;
         }
 
+        // Não injeta se o token de API ou o nome do assistente não estiverem configurados.
+        $token         = trim($this->params->get('token', ''));
+        $assistantName = trim($this->params->get('assistant_name', ''));
+        if ($token === '' || $assistantName === '') {
+            return;
+        }
+
         $markup = $this->montarChatMarkup();
 
         $buffer = $app->getBody();
